@@ -18,6 +18,9 @@ function Container(wish, time, texts) {
             document.querySelector(`.pass-time .${item}`).innerHTML = this[item]();
         })
     }, 1000);
+
+    let m = document.querySelector('.song-audio-autoplay'); 
+    m.play()
 }
 
 Container.prototype = {
