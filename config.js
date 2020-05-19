@@ -19,6 +19,7 @@ var config = {
         "Hold your hand",
         "I want to",
         "Companion can last forever",
+        "I really miss you",
         "I miss you so much",
     ],
     wish: "大傻子&&小可爱在一起",
