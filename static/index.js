@@ -1,6 +1,11 @@
 window.addEventListener("load", () => {
-    new Container(config.wish, config.time, config.texts);
+    new Container(config.wish, config.time, config.texts)
 });
+
+window.onload = function(){
+    let m = document.querySelector('.song-audio-autoplay')
+    m.play()
+}
 
 function Container(wish, time, texts) {
     this.passedSeconds = 0;
@@ -19,8 +24,10 @@ function Container(wish, time, texts) {
         })
     }, 1000);
 
-    let m = document.querySelector('.song-audio-autoplay'); 
-    m.play()
+    
+    
+    
+
 }
 
 Container.prototype = {
