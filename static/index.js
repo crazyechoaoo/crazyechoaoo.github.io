@@ -2,7 +2,7 @@ window.addEventListener("load", () => {
     new Container(config.wish, config.time, config.texts)
 });
 
-window.onload = function(){
+window.onclick = function(){
     let m = document.querySelector('.song-audio-autoplay')
     m.play()
 }
