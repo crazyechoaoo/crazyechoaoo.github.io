@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<title>Net Simulation Lab</title>
+
+	<!-- Template Javascript Files
+		================================================== -->
+	<script src="js/jquery-1.10.2.js"></script>
+	<script src="plugins/bootstrap/bootstrap.min.js"></script>
+	<script src="js/arp.js"></script>
+	<script src="js/vue.js"></script>
+	<script src="js/index.js"></script>
+
+	<!-- Template CSS Files
+		================================================== -->
+	<link rel="stylesheet" href="css/element-ui.css">
+	<link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css">
+	<link rel="stylesheet" href="plugins/animate-css/animate.css">
+	<link rel="stylesheet" href="plugins/hover/hover-min.css" media="all">
+	<link rel="stylesheet" href="css/style.css" type="text/css">
+	<link href="css/tcp.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body id="page-top" class="index">
+	<div id="div">
+		<!-- 背景 -->
+		<div style="position: fixed;top: 0;left: 0;z-index: -2;">
+			<img src="img/arpback.png" alt="" style="height: auto;width: 1920px;">
+		</div>
+		<!-- 导航条 -->
+		<section class="top-bar animated-header" style="padding: 6px 0;">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<nav class="navbar navbar-expand-lg navbar-light bg-light">
+							<a class="navbar-brand" href="index.html" style="padding: 0px;">
+								<img style="height: 32px;width: auto;" src="img\logo.png" alt="网络协议模拟">
+							</a>
+							<button class="navbar-toggler" type="button" data-toggle="collapse"
+								data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+								aria-expanded="false" aria-label="Toggle navigation">
+								<span class="navbar-toggler-icon"></span>
+							</button>
+
+							<div class="collapse navbar-collapse" id="navbarSupportedContent">
+								<ul class="navbar-nav ml-auto">
+									<li class="nav-item">
+										<a class="nav-link" href="index.html">首页 </a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" href="tcp.html">Tcp/Ip协议 </a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" href="arp.html">Arp协议</a>
+									</li>
+									<!-- <li class="nav-item">
+											<a class="nav-link" href="about.html">Udp</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="about.html">Ip</a>
+										</li>
+										<li class="nav-item dropdown">
+											<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+												aria-expanded="false">
+												Pages
+											</a>
+											<div class="dropdown-menu" aria-labelledby="navbarDropdown" style="min-width:85px !important;">
+												<a class="dropdown-item" href="404.html">Tcp</a>
+												<a class="dropdown-item" href="gallery.html">Arp</a>
+												<a class="dropdown-item" href="single-post.html">Udp</a>
+												<a class="dropdown-item" href="single-post.html">Ip</a>
+											</div>
+										</li> -->
+								</ul>
+							</div>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- 信息框 -->
+		<el-card class="box-card animate__animated animate__slideInRight"
+			style="padding:5px;position: fixed;top:80px;left: 1165px;z-index: 9;width: 730px;">
+			<div class="container">
+				<el-card class="box-card" shadow='never'>
+					<div slot="header" class="clearfix" style="padding: 0px">
+						<span>数据包记录</span>
+					</div>
+					<el-row style="margin: -8px">
+						<el-col :span="24" style="margin-bottom: 0px;">
+							<el-table :data="packetInfo" height=230 border :row-class-name="tableRowClassName">
+								<el-table-column prop="id" label="序号" width="50">
+								</el-table-column>
+								<el-table-column prop="type" label="类型" width="90">
+								</el-table-column>
+								<el-table-column prop="src_ip" label="源主机IP" width="120">
+								</el-table-column>
+								<el-table-column prop="src_mac" label="源主机MAC" width="150">
+								</el-table-column>
+								<el-table-column prop="dst_ip" label="目的主机IP" width="120">
+								</el-table-column>
+								<el-table-column prop="dst_mac" label="目的主机MAC">
+								</el-table-column>
+								<!-- <el-table-column prop="description" label="描述">
+								</el-table-column> -->
+							</el-table>
+						</el-col>
+					</el-row>
+				</el-card>
+				<div style="height: 15px;"></div>
+			</div>
+			<div class="container">
+				<el-card class="box-card" shadow='never'>
+					<div slot="header" class="clearfix" style="padding: 0px">
+						<span>用户ARP缓存表</span>
+					</div>
+					<el-row style="margin: -8px">
+						<el-col :span="24" style="margin-bottom: 0px;">
+							<el-table :data="arp_table" border height="180" :row-class-name="tableRowClassName">
+								<el-table-column prop="ip" label="IP地址" width="200">
+								</el-table-column>
+								<el-table-column prop="mac" label="MAC地址" width="200">
+								</el-table-column>
+								<el-table-column label="删除">
+									<template slot-scope="scope">
+										<el-button size="mini" type="danger"
+											@click="handleDelete(scope.$index, scope.row)">删除</el-button>
+									</template>
+								</el-table-column>
+							</el-table>
+						</el-col>
+					</el-row>
+				</el-card>
+				<div style="height: 15px;"></div>
+			</div>
+			<div class="container">
+				<el-card class="box-card" shadow='never'>
+					<div slot="header" class="clearfix" style="padding: 0px">
+						<span>局域网信息</span>
+					</div>
+					<el-row style="margin: -8px">
+						<el-col :span="24" style="margin-bottom: 0px;">
+							<el-table :data="hostInfo" border :row-class-name="tableRowClassName">
+								<el-table-column prop="host" label="主机" width="80">
+								</el-table-column>
+								<el-table-column prop="ip" label="私网IP地址" width="145">
+								</el-table-column>
+								<el-table-column prop="mac" label="MAC地址" width="165">
+								</el-table-column>
+								<el-table-column prop="gateway" label="网关">
+								</el-table-column>
+							</el-table>
+						</el-col>
+					</el-row>
+				</el-card>
+				<div style="height: 25px;"></div>
+			</div>
+			<div class="container">
+				<el-row :gutter="20" style="margin-bottom: 0px;">
+					<el-col :span="16">
+						<!-- <el-table ref="multipleTable" :data="eventTable" tooltip-effect="dark" border height=82
+							@selection-change="handleSelectionChange">
+							<el-table-column type="selection" width="39">
+							</el-table-column>
+							<el-table-column prop="event" label="事件">
+							</el-table-column>
+						</el-table> -->
+						<el-card class="box-card" shadow='never' style="height: 82px;">
+							<div slot="header" class="clearfix" style="padding: 0px">
+								<span>事件</span>
+								</el-popover>
+							</div>
+							<el-row style="margin: -8px;">
+								<el-row :gutter="25" style="padding: 10px;">
+									<el-col :span="24">
+										<span class="arp_span"> 用户受到arp欺骗 &nbsp&nbsp<el-switch v-model="is_arp_cheat"
+												@change="arp_cheat_change" active-color="#13ce66"
+												inactive-color="#ff4949">
+											</el-switch></span>
+									</el-col>
+								</el-row>
+								<!-- <el-col :span="24" style="margin-bottom: 0px;">
+									<el-table :data="hostInfo" border :row-class-name="tableRowClassName">
+										<el-table-column prop="host" label="主机" width="80">
+										</el-table-column>
+										<el-table-column prop="ip" label="私网IP地址" width="145">
+										</el-table-column>
+										<el-table-column prop="mac" label="MAC地址" width="165">
+										</el-table-column>
+										<el-table-column prop="gateway" label="网关">
+										</el-table-column>
+									</el-table>
+								</el-col> -->
+							</el-row>
+						</el-card>
+					</el-col>
+					<el-col :span="8">
+						<!-- <h5 style="margin-bottom: 4px;">操作：</h5> -->
+						<el-dropdown @command="handleCommand">
+							<el-button type="primary" :plain="true" style="width: 220.5px;">
+								Ping <i class="el-icon-arrow-down el-icon--right"></i>
+							</el-button>
+							<el-dropdown-menu slot="dropdown" trigger="click">
+								<el-dropdown-item command="host1">主机1</el-dropdown-item>
+								<el-dropdown-item command="host2">主机2</el-dropdown-item>
+								<el-dropdown-item command="host3">主机3</el-dropdown-item>
+								<el-dropdown-item command="server">某个远程主机</el-dropdown-item>
+							</el-dropdown-menu>
+						</el-dropdown>
+						<div style="height: 2px;"></div>
+						<el-button type="primary" :plain="true" @click='reset' style="width:100%"> 重置
+						</el-button>
+					</el-col>
+				</el-row>
+			</div>
+		</el-card>
+		<!-- 图片 -->
+		<section>
+			<div id="attacker" class="block " style="position: fixed;top:761px;left: 555px;display: none;">
+				<img style="width: 110px;;height:auto;margin:0px;" src="img/攻击者.png" alt="">
+			</div>
+			<div id="arp_user" class="block animate__animated animate__fadeInUp hvr-grow"
+				style="position: fixed;top: 657px;left: 833px;">
+				<img style="width: auto;;height:auto;margin:0px;" src="img/arp_user.png" alt=""><br>
+				<el-tag effect="dark" style="font-size: 20px;width: 100%;text-align: center;">192.168.1.100 [用户]
+				</el-tag>
+			</div>
+			<div id="arp_router" class="blockanimate__animated animate__fadeInUp hvr-grow"
+				style="position: fixed;top: 426px;left: 649px;">
+				<img style="width: auto;;height:auto;margin:0px;" src="img/arp_router.png" alt=""><br>
+				<el-tag effect="dark" style="font-size: 16px;width: 100%;text-align: center;">192.168.1.1 [路由器]</el-tag>
+			</div>
+			<div id="arp_server" class="block animate__animated animate__fadeInDown hvr-grow"
+				style="position: fixed;top: 109px;left: 707px;">
+				<img style="width: auto;;height:auto;margin:0px;" src="img/arp_server.png" alt=""><br>
+				<el-tag effect="dark" style="font-size: 20px;width: 100%;text-align: center;">互联网服务提供商</el-tag>
+			</div>
+			<div id="arp_host1" class="block animate__animated animate__fadeInUp hvr-grow"
+				style="position: fixed;top: 822px;left: 433px;">
+				<el-tag effect="dark" style="font-size: 16px;width: 100%;text-align: center;">192.168.1.101 [主机1]
+				</el-tag>
+				<br>
+				<img style="width: auto;height:auto;margin-left: 18px;" src="img/arp_host.png" alt="">
+			</div>
+			<div id="arp_host2" class="block animate__animated animate__fadeInUp  hvr-grow"
+				style="position: fixed;top:473px;left: 266px;">
+				<img style="width: auto;;height:auto;margin-left: 18px;" src="img/arp_host.png" alt=""><br>
+				<el-tag effect="dark" style="font-size: 16px;width: 100%;text-align: center;">192.168.1.102 [主机2]
+				</el-tag>
+			</div>
+			<div id="arp_host3" class="block animate__animated animate__fadeInUp  hvr-grow"
+				style="position: fixed;top: 647px;left: 71px;">
+				<img style="width: 154px; height: auto; margin-left:13px" src="img/arp_host.png" alt=""><br>
+				<el-tag effect="dark" style="font-size: 16px;width: auto;text-align: center;">192.168.1.103 [主机3]
+				</el-tag>
+			</div>
+		</section>
+	</div>
+</body>
+
+</html>

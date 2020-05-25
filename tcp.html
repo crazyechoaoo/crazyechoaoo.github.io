@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<title>Network Simulation Lab</title>
+
+	<!-- Template Javascript Files
+	================================================== -->
+	<script src="js/jquery-1.10.2.js"></script>
+	<script src="js/jquery.actual.js"></script>
+	<script src="plugins/bootstrap/bootstrap.min.js"></script>
+	<script src="js/tcp.js"></script>
+	<script src="js/vue.js"></script>
+	<script src="js/index.js"></script>
+
+	<!-- Template CSS Files
+		================================================== -->
+	<link rel="stylesheet" href="css/element-ui.css">
+	<link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css">
+	<link rel="stylesheet" href="plugins/animate-css/animate.css">
+	<link rel="stylesheet" href="plugins/hover/hover-min.css" media="all">
+	<link rel="stylesheet" href="css/style.css" type="text/css">
+	<link href="css/tcp.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body id="page-top" class="index">
+	<div id="div">
+		<!-- 背景 -->
+		<div style="position: fixed;top: 0;left: 0;z-index: -2;">
+			<img src="img/tcpback2.png" alt="" style="height: auto;width: 1920px;">
+		</div>
+		<!-- 导航条 -->
+		<section class="top-bar animated-header" style="padding: 6px 0;">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<nav class="navbar navbar-expand-lg navbar-light bg-light">
+							<a class="navbar-brand" href="index.html" style="padding: 0px;">
+								<img style="height: 32px;width: auto;" src="img\logo.png" alt="网络协议模拟">
+							</a>
+							<button class="navbar-toggler" type="button" data-toggle="collapse"
+								data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+								aria-expanded="false" aria-label="Toggle navigation">
+								<span class="navbar-toggler-icon"></span>
+							</button>
+
+							<div class="collapse navbar-collapse" id="navbarSupportedContent">
+								<ul class="navbar-nav ml-auto">
+									<li class="nav-item">
+										<a class="nav-link" href="index.html">首页 </a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" href="tcp.html">Tcp/Ip协议 </a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" href="arp.html">Arp协议</a>
+									</li>
+									<!-- <li class="nav-item">
+											<a class="nav-link" href="about.html">Udp</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="about.html">Ip</a>
+										</li>
+										<li class="nav-item dropdown">
+											<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+												aria-expanded="false">
+												Pages
+											</a>
+											<div class="dropdown-menu" aria-labelledby="navbarDropdown" style="min-width:85px !important;">
+												<a class="dropdown-item" href="404.html">Tcp</a>
+												<a class="dropdown-item" href="gallery.html">Arp</a>
+												<a class="dropdown-item" href="single-post.html">Udp</a>
+												<a class="dropdown-item" href="single-post.html">Ip</a>
+											</div>
+										</li> -->
+								</ul>
+							</div>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- 信息框 -->
+		<el-card class="box-card animate__animated animate__slideInRight"
+			style="position: fixed;top:150px;left: 1320px;z-index: 9;width: 580px;padding: 8px;">
+			<div class="container">
+				<el-card class="box-card" shadow='never'>
+					<div slot="header" class="clearfix" style="padding: 0px">
+						<!-- <el-popover placement="top-start" title="标题" width="200" trigger="hover"
+							content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。"> -->
+						<span slot="reference">数据包记录</span>
+						<!-- </el-popover> -->
+					</div>
+					<el-row style="margin: -8px">
+						<el-col :span="24" style="margin-bottom: 0px;">
+							<el-table :data="packetInfo" height="280" :row-class-name="tableRowClassName" border>
+								<el-table-column prop="id" label="序号" width="50">
+								</el-table-column>
+								<el-table-column prop="src" label="发送者" width="120">
+								</el-table-column>
+								<el-table-column prop="description" label="描述">
+								</el-table-column>
+							</el-table>
+
+						</el-col>
+					</el-row>
+				</el-card>
+				<div style="height: 15px;"></div>
+			</div>
+			<div class="container">
+				<el-card class="box-card" shadow='never'>
+					<div slot="header" class="clearfix" style="padding: 0px">
+						<!-- <el-popover placement="top-start" title="标题" width="200" trigger="hover"
+							content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。"> -->
+						<span slot="reference">配置</span>
+						<!-- </el-popover> -->
+					</div>
+					<el-row :gutter="40" style="margin-bottom: 0px;">
+						<el-col :span="12">
+							<el-row>
+								<el-col :span="10" style="margin-bottom: 4px;">
+
+									<span class="tcp_label pointer hvr-sweep-to-right" @click="show_ip_tips"> 客户端ip地址
+									</span>
+								</el-col>
+								<el-col :span="14" style="margin-bottom: 4px;">
+									<el-tag style="width: 100%;text-align: center;" effect="plain">{{Client.addr.ip}}
+									</el-tag>
+								</el-col>
+							</el-row>
+							<el-row>
+								<el-col :span="10" style="margin-bottom: 4px;">
+									<span class="tcp_label hvr-sweep-to-right pointer" @click="show_port_tips"> 客户端端口号
+									</span>
+								</el-col>
+								<el-col :span="14" style="margin-bottom: 4px;">
+									<el-input v-model="Client.addr.port" v-bind:disabled="inputEnabled"
+										@change='retify_port' onkeyup="this.value=this.value.replace(/[^\d.]/g,'');"
+										maxlength="5"></el-input>
+								</el-col>
+							</el-row>
+							<el-row>
+								<el-col :span="10" style="margin-bottom: 4px;"><span
+										class="status tcp_label pointer hvr-sweep-to-right" @click="show_status"> 客户端状态
+									</span></el-col>
+								<el-col :span="14" style="margin-bottom: 4px;">
+									<el-tag style="width: 100%;text-align: center;" effect="plain">{{Client.status}}
+									</el-tag>
+								</el-col>
+							</el-row>
+							<el-row>
+								<el-col :span="10" style="margin-bottom: 4px;"><span class="tcp_label"> 发送窗口大小
+									</span></el-col>
+								<el-col :span="14" style="margin-bottom: 4px;">
+									<el-tag style="width: 100%;text-align: center;" effect="plain">
+										{{Server.recvWindowSize}}</el-tag>
+								</el-col>
+							</el-row>
+							<el-row>
+								<el-col :span="10" style="margin-bottom: 4px;"><span class="tcp_label"> 最大报文段
+									</span></el-col>
+								<el-col :span="14" style="margin-bottom: 4px;">
+									<el-tag style="width: 100%;text-align: center;" effect="plain">1460</el-tag>
+								</el-col>
+							</el-row>
+							</el-tag>
+						</el-col>
+						<el-col :span="12">
+							<el-row>
+								<el-col :span="10" style="margin-bottom: 4px;"><span class="tcp_label"> 服务器ip地址 </span>
+								</el-col>
+								<el-col :span="14" style="margin-bottom: 4px;">
+									<el-tag style="width: 100%;text-align: center;" effect="plain">{{Server.addr.ip}}
+									</el-tag>
+								</el-col>
+							</el-row>
+							<el-row>
+								<el-col :span="10" style="margin-bottom: 4px;"><span class="tcp_label"> 服务器端口号 </span>
+								</el-col>
+								<el-col :span="14" style="margin-bottom: 4px;">
+									<el-tag style="width: 100%;text-align: center;" effect="plain">{{Server.addr.port}}
+									</el-tag>
+								</el-col>
+							</el-row>
+							<el-row>
+								<el-col :span="10" style="margin-bottom: 4px;"><span
+										class="status tcp_label pointer hvr-sweep-to-right" @click="show_status"> 服务器状态
+									</span></el-col>
+								<el-col :span="14" style="margin-bottom: 4px;">
+									<el-tag style="width: 100%;text-align: center;" effect="plain">{{Server.status}}
+									</el-tag>
+								</el-col>
+							</el-row>
+							<el-row>
+								<el-col :span="10" style="margin-bottom: 4px;">
+									<span class="tcp_label hvr-sweep-to-right pointer" @click="show_size_tips"> 接受窗口大小
+									</span>
+								</el-col>
+								<el-col :span="14" style="margin-bottom: 4px;">
+									<el-input v-model="Server.recvWindowSize" v-bind:disabled="inputEnabled"
+										@change='retify_size' onkeyup="this.value=this.value.replace(/[^\d.]/g,'');"
+										maxlength="1"></el-input>
+								</el-col>
+							</el-row>
+							<el-row>
+								<el-col :span="10" style="margin-bottom: 4px;">
+									<span class="tcp_label hvr-sweep-to-right pointer" @click="show_mss_tips"> 最大报文段
+									</span>
+								</el-col>
+								<el-col :span="14" style="margin-bottom: 4px;">
+									<el-input v-model="Server.maxSegmentSize" v-bind:disabled="inputEnabled"
+										@change='retify_mss' onkeyup="this.value=this.value.replace(/[^\d.]/g,'');"
+										maxlength="4"></el-input>
+								</el-col>
+							</el-row>
+							<!-- <el-form-item label="累计确认" prop="delivery">
+									<el-switch v-model="Server.cumulativeack"></el-switch>
+								</el-form-item> -->
+							</el-tag>
+						</el-col>
+					</el-row>
+				</el-card>
+				<div style="height: 15px;"></div>
+			</div>
+			<div class="container">
+				<el-row :gutter="20" style="margin-bottom: 0px;">
+					<el-col :span="16">
+						<el-table ref="multipleTable" :data="eventTable" tooltip-effect="dark" height="166" border
+							style="width: 100%" @selection-change="handleSelectionChange">
+							<el-table-column type="selection" width="50">
+							</el-table-column>
+							<el-table-column prop="event" label="事件">
+							</el-table-column>
+						</el-table>
+					</el-col>
+					<el-col :span="8">
+						<el-button type="primary" plain @click='request' style="width:100%"> 请求连接 </el-button>
+						<div style="height: 2px;"></div>
+						<el-button type="primary" plain @click='shutdown' style="width:100%"> 关闭连接 </el-button>
+						<div style="height: 2px;"></div>
+						<el-button type="primary" plain @click='send10' style="width:100%"> 发送4096K数据 </el-button>
+						<div style="height: 2px;"></div>
+						<el-button type="primary" :plain="true" @click='reset' style="width:100%"> 重置 </el-button>
+					</el-col>
+				</el-row>
+			</div>
+		</el-card>
+		<!-- 图片 -->
+		<section>
+			<div id="user" class="block pointer hvr-grow" style="position: fixed;top:621px;left: 826px;"
+				@click="click_user">
+				<img style="width:auto;height:auto;margin:0px;" src="img/ren.png" alt="">
+			</div>
+			<div id="server" class="block" style="position: fixed;top:504px;left: 94px;">
+				<img style="width:auto;height:auto;margin:0px;" src="img/server.png" alt="">
+			</div>
+			<div id="transport_layer_1" class="block animate__animated animate__fadeInUp hvr-grow"
+				style="position: fixed;top: 500px;left: 856px;">
+				<el-row>
+					<el-col :span="19">
+						<img style="width:auto;height:auto;margin:0px;" src="img/transport_layer_1.png" alt=""
+							@click="click_transport_layer_1" class="pointer">
+					</el-col>
+					<el-col :span="5">
+						<el-progress type="circle" :percentage="client_timer" :width="91" :format="format">
+						</el-progress>
+					</el-col>
+				</el-row>
+			</div>
+			<div id="transport_layer_2" class="block animate__animated animate__fadeInUp"
+				style="position: fixed;top: 391px;left: 134px;">
+				<el-row>
+					<el-col :span="19">
+						<img style="width:auto;height:auto;margin:0px;" src="img/transport_layer_2.png" alt="">
+					</el-col>
+					<el-col :span="5">
+						<el-progress type="circle" :percentage="server_timer" :width="91" :format="format">
+						</el-progress>
+					</el-col>
+				</el-row>
+			</div>
+			<div id="internet_layer_1" class="block pointer animate__animated animate__fadeInUp hvr-grow"
+				style="position: fixed;top: 386px;left: 856px;" @click="click_internet_layer_1">
+				<img style="width:auto;height:auto;margin:0px;" src="img/internet_layer_1.png" alt="">
+			</div>
+			<div id="internet_layer_2" class="block animate__animated animate__fadeInUp"
+				style="position: fixed;top: 277px;left: 134px;">
+				<img style="width:auto;height:auto;margin:0px;" src="img/internet_layer_2.png" alt="">
+			</div>
+			<div id='SYN-SENT' class="block yinshen" style="position: fixed;top: 550px;left: 667px;">
+				<img style="width:220px;height:auto;margin:0px;" src="img/请求和服务器建立连接.png" alt="">
+			</div>
+			<div id='SYN-RCVD' class="block yinshen" style="position: fixed;top: 507px;left: 427px;">
+				<img style="width:270px;height:auto;margin:0px;" src="img/收到自客户端的消息，同意建立连接.png" alt="">
+			</div>
+			<div id='SYN-RCVD-fail' class="block yinshen" style="position: fixed;top: 507px;left: 427px;">
+				<img style="width:270px;height:auto;margin:0px;" src="img/收到来自客户端的消息，但不同意建立连接.png" alt="">
+			</div>
+			<div id='ESTABLISHED' class="block yinshen" style="position: fixed;top: 547px;left: 574px;">
+				<img style="width:350px;height:auto;margin:0px;" src="img/服务器同意建立连接.png" alt="">
+			</div>
+			<div id='ESTABLISHED-fail' class="block yinshen" style="position: fixed;top: 547px;left: 574px;">
+				<img style="width:350px;height:auto;margin:0px;" src="img/服务器不同意建立连接.png" alt="">
+			</div>
+			<div id='FIN-WAIT-1' class="block yinshen" style="position: fixed;top: 550px;left: 667px;">
+				<img style="width:220px;height:auto;margin:0px;" src="img/请求和服务器断开连接.png" alt="">
+			</div>
+			<div id='CLOSE-WAIT' class="block yinshen" style="position: fixed;top: 507px;left: 427px;">
+				<img style="width:310px;height:auto;margin:0px;" src="img/收到来自客户端的消息，同意对方断开连接.png" alt="">
+			</div>
+			<div id='LAST-ACK' class="block yinshen" style="position: fixed;top: 507px;left: 427px;">
+				<img style="width:350px;height:auto;margin:0px;" src="img/请求和客户端断开连接.png" alt="">
+			</div>
+			<div id='TIME-WAIT' class="block yinshen" style="position: fixed;top: 597px;left: 658px;">
+				<img style="width:300px;height:auto;margin:0px;" src="img/收到来自服务器的消息，同意对方断开连接.png" alt="">
+			</div>
+
+			<div id='resend_1' class="block yinshen" style="position: fixed;top: 577px;left: 607px">
+				<img style="width:270px;height:auto;margin:0px;" src="img/超时重传.png" alt="">
+			</div>
+			<div id='resend_2' class="block yinshen" style="position: fixed;top: 507px;left: 427px">
+				<img style="width:350px;height:auto;margin:0px;" src="img/超时重传2.png" alt="">
+			</div>
+			<div id='giveup' class="block yinshen" style="position: fixed;top: 557px;left: 547px;">
+				<img style="width:350px;height:auto;margin:0px;" src="img/目标主机不存在，放弃连接.png" alt="">
+			</div>
+			<div id='know_established' class="block yinshen"
+				style="position: fixed;top: 507px;left: 427px;display: none;opacity: 0;">
+				<img style="width:350px;height:auto;margin:0px;" src="img/连接建立完毕.png" alt="">
+			</div>
+			<div id='pkt_die' class="block yinshen" style="position: fixed;top: 227px;left: 737px;z-index: 9;">
+				<img style="width:300px;height:auto;margin:0px;" src="img/这个数据报在网络中丢失了.png" alt="">
+			</div>
+		</section>
+	</div>
+</body>
+
+</html>

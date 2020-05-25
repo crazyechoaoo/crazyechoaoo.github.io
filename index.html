@@ -1,111 +1,1138 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="utf-8">
-    <link rel="shortcut icon" href="static/nigeerhuox16.ico.jpg">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <title>love</title>
-    <link rel="stylesheet" href="./static/style.css">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<title>Network Simulation Lab</title>
+
+	<!-- Template Javascript Files
+		================================================== -->
+	<script src="js/jquery-1.10.2.js"></script>
+	<script src="plugins/bootstrap/bootstrap.min.js"></script>
+	<script src="js/vue.js"></script>
+	<script src="js/index.js"></script>
+	<script src="js/index2.js"></script>
+
+	<!-- Template CSS Files
+		================================================== -->
+	<link rel="stylesheet" href="css/element-ui.css">
+	<link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css">
+	<link rel="stylesheet" href="plugins/animate-css/animate.css">
+	<link rel="stylesheet" href="plugins/hover/hover-min.css" media="all">
+	<link rel="stylesheet" href="css/style.css" type="text/css">
+	<link href="css/tcp.css" rel="stylesheet" type="text/css">
+
 </head>
 
-<body>
-    <audio class="song-audio-autoplay" controls loop style="display: none">
-        <source src="static/wanan-yanrenzhong.mp3">
-        </source>
-        Your browser isn't invited for super fun audio time.
-    </audio>
-    <style type="text/css">
-        .rotateImages {
-            -webkit-animation: myRotate 10s linear infinite;
-            animation: myRotate 10s linear infinite;
-        }
+<body id="page-top" class="index">
+	<div id='div'>
+		<!-- 背景 -->
+		<div style="position: fixed;top: 0;left: 0;z-index: -2;">
+			<img src="img/indexback.png" alt="" style="height: auto;width: 1920px;">
+		</div>
+		<!-- 导航条 -->
+		<section class="top-bar animated-header" style="padding: 6px 0;">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<nav class="navbar navbar-expand-lg navbar-light bg-light">
+							<a class="navbar-brand" href="index.html" style="padding: 0px;">
+								<img style="height: 32px;width: auto;" src="img\logo.png" alt="网络协议模拟">
+							</a>
+							<button class="navbar-toggler" type="button" data-toggle="collapse"
+								data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+								aria-expanded="false" aria-label="Toggle navigation">
+								<span class="navbar-toggler-icon"></span>
+							</button>
 
-        @-webkit-keyframes myRotate {
-            0% {
-                -webkit-transform: rotate(0deg);
-            }
+							<div class="collapse navbar-collapse" id="navbarSupportedContent">
+								<ul class="navbar-nav ml-auto">
+									<li class="nav-item">
+										<a class="nav-link" href="index.html">首页 </a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" href="tcp.html">Tcp/Ip协议 </a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" href="arp.html">Arp协议</a>
+									</li>
+								</ul>
+							</div>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- 主体 -->
+		<div @click="show_app" class="btn_app_layer pointer animate__animated animate__fadeInDown hvr-grow"></div>
+		<div @click="show_transport" class="btn_transport_layer pointer animate__animated animate__fadeInDown hvr-grow">
+		</div>
+		<div @click="show_internet" class="btn_internet_layer pointer animate__animated animate__fadeInDown hvr-grow">
+		</div>
+		<div @click="show_datalink" class="btn_datalink_layer pointer animate__animated animate__fadeInDown hvr-grow">
+		</div>
+		<div @click="show_physical" class="btn_physical_layer pointer animate__animated animate__fadeInDown hvr-grow">
+		</div>
 
-            50% {
-                -webkit-transform: rotate(180deg);
-            }
+		<div @click="show_app" class="btn_app_layer1 pointer animate__animated animate__fadeInDown hvr-grow"></div>
+		<div @click="show_transport"
+			class="btn_transport_layer1 pointer animate__animated animate__fadeInDown hvr-grow"></div>
+		<div @click="show_internet" class="btn_internet_layer1 pointer animate__animated animate__fadeInDown hvr-grow">
+		</div>
+		<div @click="show_datalink" class="btn_datalink_layer1 pointer animate__animated animate__fadeInDown hvr-grow">
+		</div>
+		<div @click="show_physical" class="btn_physical_layer1 pointer animate__animated animate__fadeInDown hvr-grow">
+		</div>
 
-            100% {
-                -webkit-transform: rotate(360deg);
-            }
-        }
+		<div @click="show_app_proto_card" class="app_proto pointer animate__animated animate__fadeInDown hvr-float">
+		</div>
+		<div @click="show_transport_proto_card"
+			class="transport_proto pointer animate__animated animate__fadeInDown hvr-float"></div>
+		<div @click="show_internet_proto_card"
+			class="internet_proto pointer animate__animated animate__fadeInDown hvr-float"></div>
+		<div @click="show_lower_proto_card"
+			class="datalink_proto pointer animate__animated animate__fadeInDown hvr-float"></div>
+		<div @click="show_lower_proto_card"
+			class="physical_proto pointer animate__animated animate__fadeInDown hvr-float"></div>
 
-        @keyframes myRotate {
-            0% {
-                -webkit-transform: rotate(0deg);
-            }
+		<div @click='show_appdata_card' class="app_data pointer animate__animated animate__fadeInDown hvr-float"></div>
 
-            50% {
-                -webkit-transform: rotate(180deg);
-            }
+		<div @click='show_appdata_card' class="app_data1 pointer animate__animated animate__fadeInDown hvr-float"></div>
+		<div @click='show_tcpheader_card' class="tcp_head1 pointer animate__animated animate__fadeInDown hvr-float">
+		</div>
 
-            100% {
-                -webkit-transform: rotate(360deg);
-            }
-        }
-    </style>
+		<div @click='show_appdata_card' class="app_data2 pointer animate__animated animate__fadeInDown hvr-float"></div>
+		<div @click='show_tcpheader_card' class="tcp_head2 pointer animate__animated animate__fadeInDown hvr-float">
+		</div>
+		<div @click='show_ipheader_card' class="ip_head2 pointer animate__animated animate__fadeInDown hvr-float"></div>
 
-    <div style="width:100%;max-width:500px;margin:0 auto;position: relative;">
-        <div class="pass-time">
-            <p style="font-size: 24px;" class="finalText"></p>
-            <p style="font-size: 16px;">
-                <span class="kwy days"></span>
-                天
-                <span class="kwy hours"></span>
-                时
-                <span class="kwy minutes"></span>
-                分
-                <span class="kwy seconds"></span>
-                秒</p>
-        </div>
+		<div @click='show_appdata_card' class="app_data3 pointer animate__animated animate__fadeInDown hvr-float"></div>
+		<div @click='show_tcpheader_card' class="tcp_head3 pointer animate__animated animate__fadeInDown hvr-float">
+		</div>
+		<div @click='show_ipheader_card' class="ip_head3 pointer animate__animated animate__fadeInDown hvr-float"></div>
+		<div @click='show_macheader_card' class="mac_head3 pointer animate__animated animate__fadeInDown hvr-float">
+		</div>
 
-        <marquee id="marquee" direction="up" scrollamount="2"
-            style="color:white; height:100px;line-height: 20px;font-size:12px;text-align: center;">
+		<div @click='show_bits_card' class="bits4 pointer animate__animated animate__fadeInDown hvr-float"></div>
 
-        </marquee>
+		<div @click="show_app_proto_card"
+			class="app_proto_block pointer animate__animated animate__fadeInDown hvr-grow"></div>
+		<div @click="show_transport_proto_card"
+			class="transport_proto_block pointer animate__animated animate__fadeInDown hvr-grow"></div>
+		<div @click="show_internet_proto_card"
+			class="ip_proto_block pointer animate__animated animate__fadeInDown hvr-grow"></div>
+		<div @click="show_lower_proto_card"
+			class="lower_proto_block pointer animate__animated animate__fadeInDown hvr-grow"></div>
+		<div @click="show_router_proto_card"
+			class="gateway_proto_block pointer animate__animated animate__fadeInDown hvr-grow"></div>
 
+		<div @click="show_layer" class="five_layer pointer animate__animated animate__fadeInDown hvr-grow"></div>
 
-        <div id="pBg1cNNqT-an-obj-2"><img height="180" width="500" src="./static/boy-girl/2000.jpg">
-        </div>
-        <div id="pBg1cNNqT-an-obj-3">
-            <div id="pBg1cNNqT-an-obj-4"><img height="338" width="350" src="./static/boy-girl/2000(1).jpg"></div>
-            <div id="pBg1cNNqT-an-obj-5"><img height="113" width="85" src="./static/boy-girl/2000(2).jpg"></div>
-            <div id="pBg1cNNqT-an-obj-6"><img height="113" width="85" src="./static/boy-girl/2000(2).jpg"></div>
-            <div id="pBg1cNNqT-an-obj-7"><img height="113" width="85" src="./static/boy-girl/2000(2).jpg"></div>
-            <div id="pBg1cNNqT-an-obj-8"><img height="113" width="85" src="./static/boy-girl/2000(2).jpg"></div>
-            <div id="pBg1cNNqT-an-obj-9"><img height="113" width="85" src="./static/boy-girl/2000(2).jpg"></div>
-            <div id="pBg1cNNqT-an-obj-10"><img height="113" width="85" src="./static/boy-girl/2000(2).jpg"></div>
-            <div id="pBg1cNNqT-an-obj-11"><img height="113" width="85" src="./static/boy-girl/2000(2).jpg"></div>
-            <div id="pBg1cNNqT-an-obj-12"><img height="113" width="85" src="./static/boy-girl/2000(2).jpg"></div>
-            <div id="pBg1cNNqT-an-obj-13"><img height="113" width="85" src="./static/boy-girl/2000(2).jpg"></div>
-            <div id="pBg1cNNqT-an-obj-14"><img height="113" width="85" src="./static/boy-girl/2000(2).jpg"></div>
-            <div id="pBg1cNNqT-an-obj-15"><img height="113" width="85" src="./static/boy-girl/2000(2).jpg"></div>
-            <div id="pBg1cNNqT-an-obj-16"><img height="113" width="85" src="./static/boy-girl/2000(2).jpg"></div>
-            <div id="pBg1cNNqT-an-obj-17"><img height="113" width="85" src="./static/boy-girl/2000(2).jpg"></div>
-            <div id="pBg1cNNqT-an-obj-18"><img height="113" width="85" src="./static/boy-girl/2000(2).jpg"></div>
-            <div id="pBg1cNNqT-an-obj-19"><img height="113" width="85" src="./static/boy-girl/2000(2).jpg"></div>
-        </div>
-        <div id="pBg1cNNqT-an-obj-20">
-            <div id="pBg1cNNqT-an-obj-21"><img height="61" width="135" src="./static/boy-girl/2000(3).jpg"></div>
-            <div id="pBg1cNNqT-an-obj-22"><img height="256" width="237" src="./static/boy-girl/2000(4).jpg"></div>
-            <div id="pBg1cNNqT-an-obj-23"><img height="159" width="104" src="./static/boy-girl/2000(5).jpg"></div>
-        </div>
-        <div id="pBg1cNNqT-an-obj-24">
-            <div id="pBg1cNNqT-an-obj-25"><img height="401" width="195" src="./static/boy-girl/2000(6).jpg"></div>
-            <div id="pBg1cNNqT-an-obj-26"><img height="290" width="161" src="./static/boy-girl/2000(7).jpg"></div>
-        </div>
+		<div id='protocard'>
+			<div class="screen"></div>
+			<el-card id='app_proto_card' class="box-card proto_card">
+				<div slot="header" class="clearfix">
+					<span>应用层协议</span>
+					<el-button style="float: right; padding: 3px 0" type="text" @click="close_app_proto_card">关闭
+					</el-button>
+				</div>
+				<el-tabs :tab-position="tabPosition">
+					<el-tab-pane label="HTTP">
+						<el-scrollbar class="scrollbar">
+							<div style="padding: 20px;">
+								<h3>协议概述</h3>
+								<hr>
+								<p class="illustration">
+									HTTP是一个客户端（用户）和服务端（网站）之间请求和应答的标准，通常使用TCP协议。
+									通过使用网页浏览器、网络爬虫或者其它的工具，客户端发起一个HTTP请求到服务器上指定
+									端口（默认端口为80）。我们称这个客户端为用户代理程序。应答的服务器
+									上存储着一些资源，比如HTML文件和图像。我们称这个应答服务器为源服务器。在用户代理和源服务器中间可能存在多个“中间层”，比如代理服务器、网关或者隧道
+								</p>
+								<p class="illustration">
+									HTTP是应用层协议，同其他应用层协议一样，是为了实现某一类具体应用的协议，并由某一
+									运行在用户空间的应用程序来实现其功能。HTTP是一种协议规范，这种规范记录在文档上，
+									为真正通过HTTP协议进行通信的HTTP的实现程序。
+								</p>
+								<h3>请求方法</h3>
+								<hr>
+								<p class="illustration" style="text-indent: 0;">
+									HTTP/1.1协议中共定义了八种方法（也叫“动作”）来以不同方式操作指定的资源：</p>
+								<h5>GET</h5>
+								<p class="illustration">
+									向指定的资源发出“显示”请求。使用GET方法应该只用在读取数据，而不应当被用于产生“副作用”的操作中。
+								</p>
+								<h5>HEAD</h5>
+								<p class="illustration">
+									与GET方法一样，都是向服务器发出指定资源的请求。只不过服务器将不传回资源的本文部分。它的好处在于，使用这个方法可以在不必传输全部内容的情况下，就可以获取其中“关于该资源的信息”。
+								</p>
+								<h5>POST</h5>
+								<p class="illustration">
+									向指定资源提交数据，请求服务器进行处理（例如提交表单或者上传文件）。
+								</p>
+								<h5>PUT</h5>
+								<p class="illustration">
+									向指定资源位置上传其最新内容。
+								</p>
+								<h5>DELETE</h5>
+								<p class="illustration">
+									请求服务器删除Request-URI所标识的资源。
+								</p>
+								<h5>TRACE</h5>
+								<p class="illustration">
+									回显服务器收到的请求，主要用于测试或诊断。
+								</p>
+								<h5>OPTIONS</h5>
+								<p class="illustration">
+									这个方法可使服务器传回该资源所支持的所有HTTP请求方法。
+								</p>
+								<h5>CONNECT</h5>
+								<p class="illustration">
+									HTTP/1.1协议中预留给能够将连接改为隧道方式的代理服务器。通常用于SSL加密服务器的链接。
+								</p>
+							</div>
+						</el-scrollbar>
+					</el-tab-pane>
+					<el-tab-pane label="FTP">
+						<el-scrollbar class="scrollbar">
+							<div style="padding: 20px;">
+								<h3>概述</h3>
+								<hr>
+								<p class="illustration">
+									FTP服务一般运行在20和21两个端口。端口20用于在客户端和服务器之间传输数据流，而端口21用于传输控制流，并且是命令通向ftp服务器的进口。当数据通过数据流传输时，控制流处于空闲状态。运行FTP服务的许多站点都开放匿名服务，在这种设置下，用户不需要帐号就可以登录服务器，默认情况下，匿名用户的用户名是：“anonymous”。这个帐号不需要密码，虽然通常要求输入用户的邮件地址作为认证密码，但这只是一些细节或者此邮件地址根本不被确定，而是依赖于FTP服务器的配置情况。
+								</p>
+								<h5>FTP实现的目标</h5>
+								<ol>
+									<li>促进文件的共享（计算机程序或数据）</li>
+									<li>鼓励间接或者隐式的使用远程计算机</li>
+									<li>向用户屏蔽不同主机中各种文件存储系统（<span lang="en">File system</span>）的细节</li>
+									<li>可靠和高效的传输数据</li>
+								</ol>
+							</div>
+						</el-scrollbar>
+					</el-tab-pane>
+					<el-tab-pane label="TFTP">
+						<el-scrollbar class="scrollbar">
+							<div style="padding: 20px;">
+								<h3>概述</h3>
+								<hr>
+								<p class="illustration">
+									简单文件传输协议也称小型文件传输协议（TFTP）非常简单，使用UDP（端口69）作为其传输协议,透过少量存储器就能轻松实现。所以TFTP被用于引导计算机，例如没有大容量存储器的路由器。现在它仍然被用于在一个网络上主机之间传输小文件，例如从一台网络主机或服务器引导一个远程X
+									Window System终端或其他的瘦客户端。
+								</p>
+							</div>
+						</el-scrollbar>
+					</el-tab-pane>
+					<el-tab-pane label="SMTP">
+						<el-scrollbar class="scrollbar">
+							<div style="padding: 20px;">
+								<h3>概述</h3>
+								<hr>
+								<p class="illustration">
+									简单邮件传输协议（SMTP）是一个在互联网上传输电子邮件的标准。
+								</p>
+								<p class="illustration">
+									SMTP是一个相对简单的基于文本的协议。在其之上指定了一条消息的一个或多个接收者（在大多数情况下被确认是存在的），然后消息文本会被传输。可以很简单地通过telnet程序来测试一个SMTP服务器。SMTP使用TCP端口25。要为一个给定的域名决定一个SMTP服务器，需要使用DNS的MX记录。
+								</p>
+								<p class="illustration">
+									由于这个协议开始是基于纯ASCII文本的，它在二进制文件上处理得并不好。例如MIME的标准被开发来编码二进制文件以使其透过SMTP来传输。今天，大多数SMTP服务器都支持8位MIME扩展，它使二进制文件的传输变得几乎和纯文本一样简单。
+								</p>
+								<p class="illustration">
+									SMTP是一个“推”的协议，它不允许根据需要从远程服务器上“拉”来消息。要做到这点，邮件客户端必须使用POP3或IMAP。另一个SMTP服务器可以使用ETRN在SMTP上触发一个发送。
+								</p>
+							</div>
+						</el-scrollbar>
 
-    </div>
+					</el-tab-pane>
+					<el-tab-pane label="SNMP">
+						<el-scrollbar class="scrollbar">
+							<div style="padding: 20px;">
+								<h3>概述</h3>
+								<hr>
+								<p class="illustration">
+									简单网络管理协议（SNMP）构成了互联网工程工作小组定义的Internet协议族的一部分。该协议能够支持网络管理系统，用以监测连接到网络上的设备是否有任何引起管理上关注的情况。它由一组网络管理的标准组成，包含一个应用层协议、数据库模式，和一组数据对象。
+								</p>
+							</div>
+						</el-scrollbar>
 
+					</el-tab-pane>
+					<el-tab-pane label="DNS">
+						<el-scrollbar class="scrollbar">
+							<div style="padding: 20px;">
+								<h3>概述</h3>
+								<hr>
+								<p class="illustration">
+									域名系统DNS(Domain Name
+									System)是因特网使用的命名系统，用来把便于人们使用的机器名字转换成为IP地址。
+								</p>
+								<p class="illustration">
+									IP地址是由32位的二进制数字组成的。用户与因特网上某台主机通信时，显然不愿意使用很难记忆的长达32位的二进制主机地址。相反，大家愿意使用比较容易记忆的主机名字。但是，机器在处理IP数据报时，并不是使用域名而是使用IP地址。这是因为IP地址长度固定，而域名的长度不固定，机器处理起来比较困难。
+								</p>
+								<p class="illustration">
+									因为因特网规模很大，所以整个因特网只使用一个域名服务器是不可行的。因此，因特网开始采用层次树状结构的命名方法，并使用分布式的域名系统DNS。并采用客户服务器方式。DNS使大多数名字都在本地解析(resolve)，仅有少量解析需要在因特网上通信，因此DNS系统的效率很高。由于DNS是分布式系统，即使单个计算机除了故障，也不会妨碍整个DNS系统的正常运行。
+								</p>
+								<p class="illustration">
+									域名到IP地址的解析是由分布在因特网上的许多域名服务器程序共同完成的。域名服务器程序在专设的结点上运行，而人们也常把运行域名服务器程序的机器称为域名服务器。
+								</p>
+								<p class="illustration">
+									从理论上讲，整个互联网可以只使用一个域名服务器，使它装入互联网上所有的主机 名，并回答所有对IP地址的査询。然而这种做法并不可取。因为互联网规模很大，这样的 域名服务器肯定会因过负荷而无法正常工作，而且一旦域名服务器出现故障，整个互联网就 会瘫痪。
+								</p>
+							</div>
+						</el-scrollbar>
 
-    <script src="config.js"></script>
-    <script src="static/index.js"></script>
+					</el-tab-pane>
+				</el-tabs>
+			</el-card>
+			<el-card id='transport_proto_card' class="box-card proto_card">
+				<div slot="header" class="clearfix">
+					<span>传输层协议</span>
+					<el-button style="float: right; padding: 3px 0" type="text" @click="close_transport_proto_card">关闭
+					</el-button>
+				</div>
+				<el-tabs :tab-position="tabPosition">
+					<el-tab-pane label="TCP">
+						<el-scrollbar class="scrollbar">
+							<div style="padding: 20px;">
+								<el-button type="primary"
+									style="width: 100%;height: 48px;font-size: 24px;margin-bottom: 20px;" plain>
+									<a href="tcp.html">点此进入TCP/IP协议可视化页面</a> </el-button>
+								<h3>概述</h3>
+								<hr>
+								<p class="illustration">
+									TCP是TCP/IP体系中非常复杂的一个协议。下面介绍TCP最主要的特点。
+								</p>
+								<ol>
+									<li>
+										TCP是面向连接的运输层协议。这就是说，应用程序在使用TCP协议之前，必须先 建立TCP连接。在传送数据完毕后，必须释放己经建立的TCP连接。也就是说，应用进程之间的通信好像在“打电话”：通话前要先拨号建立连接，通话结束后要挂机释放连接。
+									</li>
+									<li>
+										每一条TCP连接只能有两个端点,每一条TCP连接只能是点对点的(一 对一)。
+									</li>
+									<li>
+										TCP提供可靠交付的服务。通过TCP连接传送的数据，无差错、不丢失、不重复， 并且按序到达。
+									</li>
+									<li>
+										TCP提供全双工通信。 TCP连接的两端都设有发送缓存和接收缓存，用来临时存放双向通信的数据。在发送时， 应用程序在把数据传送给TCP的缓存后，就可以做自己的事，而TCP在合适的时候把数据 发送出去。在接收时，TCP把收到的数据放入缓存，上层的应用进程在合适的时候读取缓 存中的数据。
+									</li>
+									<li>
+										面向字节流。虽然应用程序和TCP的交互是一次一个数据块(大小不等)，但 TCP把应用程序交下来的数据仅仅看成是一连串的无结构的字节流。TCP并不知道所传送 的字节流的含义。TCP不保证接收方应用程序所收到的数据块和发送方应用程序所发出的 数据块具有对应大小的关系(例如，发送方应用程序交给发送方的TCP共10个数据块，但 接收方的TCP可能只用了4个数据块就把收到的字节流交付上层的应用程序)。但接收方应 用程序收到的字节流必须和发送方应用程序发出的字节流完全一样。当然，接收方的应用程 序必须有能力识别收到的字节流，把它还原成有意义的应用层数据。下图是上述概念的示 意图。
+									</li>
+								</ol>
+								<div style="width: 650px;margin:0 auto"><img width=650 src="./img/tcp_1.png"></div>
+								<p class="illustration">
+									在因特网协议族中，TCP层是位于IP层之上，应用层之下的中间层。数据在TCP层称为流（Stream），数据分组称为分段（Segment）。
+								</p>
+								<p class="illustration">
+									应用层向TCP层发送用于网间传输的、用8位字节表示的数据流，然后TCP把数据流分割成适当长度的报文段（通常受该计算机连接的网络的数据链路层的最大传输单元（MTU）的限制）。之后TCP把结果包传给IP层，由它来透过网络将包传送给接收端实体的TCP层。TCP为了保证不发生丢包，就给每个包一个序号，同时序号也保证了传送到接收端实体的包的按序接收。然后接收端实体对已成功收到的包发回一个相应的确认信息（ACK）；如果发送端实体在合理的往返时延（RTT）内未收到确认，那么对应的数据包就被假设为已丢失并进行重传。TCP用一个校验和函数来检验数据是否有错误，在发送和接收时都要计算校验和。
+								</p>
+								<h3>TCP的运输连接管理</h3>
+								<hr>
+								<p class="illustration">
+									TCP是面向连接的协议。运输连接是用来传送TCP报文的。TCP运输连接的建立和释 放是每一次面向连接的通信中必不可少的过程。因此，运输连接就有三个阶段，即：连接建 立、数据传送和连接释放。运输连接的管理就是使运输连接的建立和释放都能正常地进行。 在TCP连接建立过程中要解决以下三个问题：
+								</p>
+								<ol>
+									<li>要使每一方能够确知对方的存在。</li>
+									<li>要允许双方协商一些参数(如最大窗口值、是否使用窗口扩大选项和时间戳选项以 及服务质量等)。</li>
+									<li>
+										能够对运输实体资源(如缓存大小、连接表中的项目等)迸行分配。 TCP连接的建立采用客户服务器方式。主动发起连接建立的应用进程叫做客户(client), 而被动等待连接建立的应用进程叫做服务器(server)。
+									</li>
+								</ol>
+								<h5>
+									TCP的连接建立
+								</h5>
+								<p class="illustration">
+									TCP用三次握手（或称三路握手，three-way
+									handshake）过程创建一个连接。在连接创建过程中，很多参数要被初始化，例如序号被初始化以保证按序传输和连接的强壮性。
+								</p>
+								<p class="illustration">
+									假定主机A运行的是TCP客户程序，而B运行TCP服务器程序。最初两端的TCP进程都处于CLOSED
+									（关闭）状态。图中在主机下面的方框分别是TCP进程所处的状态。请 注意，在本例中，A主动打开连接，而B被动打开连接。
+								</p>
+								<div style="width: 650px;margin:0 auto"><img width=650 src="./img/tcp_2.png"></div>
+								<p class="illustration">
+									一开始，B的TCP服务器进程先创建传输控制块TCB①，准备接受客户进程的连接请 求。然后服务器进程就处于LISTEN
+									（收听）状态，等待客户的连接请求。如有，即作出 响应。
+								</p>
+								<p class="illustration">
+									A的TCP客户进程也是首先创建传输控制模块TCB。然后，在打算建立TCP连接时， 向B发出连接请求报文段，这时首部中的同步位SYN = 1,同时选择一个初始序号seq
+									= x。TCP规定，SYN报文段（即SYN= 1的报文段）不能携带数据，但要消耗掉一个序号。 这时，TCP客户进程进入SYN-SENT （同步己发送）状态。
+								</p>
+								<p class="illustration">
+									B收到连接请求报文段后，如同意建立连接，则向A发送确认。在确认报文段中应把 SYN位和ACK位都置1,确认号是ack = x+l,同时也为自己选择一个初始序号seq =
+									y« 请注意，这个报文段也不能携带数据，但同样要消耗掉一个序号。这时TCP服务器进程进 入SYN-RCVD （同步收到）状态。
+								</p>
+								<p class="illustration">
+									TCP客户进程收到B的确认后，还要向B给出确认。确认报文段的ACK置1,确认号 ack = y+b而自己的序号seq = x +
+									l。TCP的标准规定，ACK报文段可以携带数据。但如 果不携带数据则不消耗序号，在这种情况下，下一个数据报文段的序号仍是seq = x +
+									L这 时，TCP连接已经建立，A进入ESTABLISHED （己建立连接）状态。
+								</p>
+								<p class="illustration">
+									当B收到A的确认后，也进入ESTABLISHED状态。
+								</p>
+
+								<h5>
+									TCP的连接释放
+								</h5>
+								<p class="illustration">
+									TCP连接释放过程比较复杂，我们仍结合双方状态的改变来阐明连接释放的过程。
+								</p>
+								<p class="illustration">
+									数据传输结束后，通信的双方都可释放连接。现在A和B都处于ESTABLISHED状态 .
+									A的应用进程先向其TCP发出连接释放报文段，并停止再发送数据，主动关闭 TCP连接。A把连接释放报文段首部的终止控制位FIN置1,其序号seq =
+									u,它等于前面 己传送过的数据的最后一个字节的序号加1。这时A进入FIN・WATP1
+									（终止等待1）状 态，等待B的确认。请注意，TCP规定，FIN报文段即使不携带数据，它也消耗掉一个 序号。
+								</p>
+								<div style="width:650px;margin:0 auto"><img width=650 src="./img/tcp_3.png"></div>
+								<p class="illustration">
+									B收到连接释放报文段后即发出确认，确认号是ack = u +
+									l,而这个报文段自己的序号 是v,等于B前面己传送过的数据的最后一个字节的序号加L然后B就进入CLOSE- WAIT
+									（关闭等待）状态。TCP服务器进程这时应通知高层应用进程，因而从A到B这个方 向的连接就释放了，这时的TCP连接处于半关闭（halUclose状态，即A已经没有数据要发 送了，但B若发送数据，A仍要接收。也就是说，从B到A这个方向的连接并未关闭，这 个状态可能会持续一段时间。
+								</p>
+								<p class="illustration">
+									A收到来自B的确认后，就进入FIN-WAIT-2 （终止等待2）状态，等待B发出的连接 释放报文段。
+								</p>
+								<p class="illustration">
+									若B已经没有要向A发送的数据，其应用进程就通知TCP释放连接。这时B发出的连 接释放报文段必须使FIN= 1。现假定B的序号为w
+									（在半关闭状态B可能又发送了一些数 据）。B还必须重复上次已发送过的确认号ack = u + 1。这时B就进入LASPACK （最后确 认）状态，等待A的确认。
+								</p>
+								<p class="illustration">
+									A在收到B的连接释放报文段后，必须对此发出确认。在确认报文段中把ACK置1,确认号ack = w + l,而自己的序号是seq = u+l
+									(根据TCP标准，前面发送过的FIN报文 段要消耗一个序号)。然后进入到TIME-WAIT
+									(时间等待)状态。请注意，现在TCP连接 还没有释放掉。必须经过时间等待计时器(TIME・WAIT
+									timer)设置的时间2MSL后，A才进 入到CLOSED状态。时间MSL叫做最长报文段寿命(Maximum Segment Lifetime), RFC
+									793 建议设为2分钟。但这完全是从工程上来考虑的，对于现在的网络，MSL =
+									2分钟可能太长 了一些。因此TCP允许不同的实现可根据具体情况使用更小的MSL值。因此，从A进入 到TIME-WAIT状态后，要经过4分钟才能进入到CLOSED状态，才能开始建立下一个新 的连接。当A撤销相应的传输控制块TCB后，就结束了这次的TCP连接。
+								</p>
+							</div>
+						</el-scrollbar>
+					</el-tab-pane>
+					<el-tab-pane label="UDP">
+						<el-scrollbar class="scrollbar">
+							<div style="padding: 20px;">
+								<h3>概述</h3>
+								<hr>
+								<p class="illustration">
+									用户数据报协议（UDP；又称用户数据包协议）是一个简单的面向数据报的通信协议，位于OSI模型的传输层。
+								</p>
+								<p class="illustration">
+									UDP只提供数据的不可靠传递，它一旦把应用程序发给网络层的数据发送出去，就不保留数据备份（所以UDP有时候也被认为是不可靠的数据报协议）。UDP适用于不需要或在程序中执行错误检查和纠正的应用，它避免了协议栈中此类处理的开销。对时间有较高要求的应用程序通常使用UDP，因为丢弃数据包比等待或重传导致延迟更可取。
+								</p>
+								<h3>可靠性</h3>
+								<hr>
+								<p class="illustration">
+									由于UDP缺乏可靠性且属于无连接协议，所以应用程序通常必须容许一些丢失、错误或重复的数据包。某些应用程序（如TFTP）可能会根据需要在应用程序层中添加基本的可靠性机制。
+								</p>
+								<p class="illustration">
+									一些应用程序不太需要可靠性机制，甚至可能因为引入可靠性机制而降低性能，所以它们使用UDP这种缺乏可靠性的协议。流媒体，实时多人游戏和IP语音（VoIP）是经常使用UDP的应用程序。在这些特定应用中，丢包通常不是重大问题。如果应用程序需要高度可靠性，则可以使用诸如TCP之类的协议。
+								</p>
+								<h3>UDP的首部格式</h3>
+								<hr>
+								<p class="illustration">
+									用户数据报UDP有两个字段：数据字段和首部字段。首部字段很简单，只有8个字节 ,由四个字段组成，每个字段的长度都是两个字节。各字段意义如下：
+								</p>
+								<div style="width: 500px;margin:0 auto"><img src="./img/udp.png"></div>
+								<ol>
+									<li>源端口:源端口号。在需要对方回信时选用。不需要时可用全0°。</li>
+									<li>目的端口：目的端口号。这在终点交付报文时必须使用。</li>
+									<li>长度：UDP用户数据报的长度，其最小值是8 （仅有首部）。 </li> 
+									<li>检验和：检测UDP用户数据报在传输中是否有错。有错就丢弃。</li>
+								</ol>
+								<h3>UDP伪首部</h3>
+								<hr>
+								<p class="illustration">
+									UDP用户数据报首部中检验和的计算方法有些特殊。在计算检验和时，要在UDP用户 数据报之前增加12个字节的伪首部。所谓“伪首部”是因为这种伪首部并不是UDP用户数 摇报真正的首部。只是在计算检验和时，临时添加在UDP用户数据报前面，得到一个临时的 UDP用户数据报。检验和就是按照这个临时的UDP用户数据报来计算的。伪首部既不向下传送也不向上递交，而仅仅是为了计算检验和。
+								</p>
+
+							</div>
+						</el-scrollbar>
+					</el-tab-pane>
+				</el-tabs>
+			</el-card>
+			<el-card id='internet_proto_card' class="box-card proto_card">
+				<div slot="header" class="clearfix">
+					<span>网络层协议</span>
+					<el-button style="float: right; padding: 3px 0" type="text" @click="close_internet_proto_card">关闭
+					</el-button>
+				</div>
+				<el-tabs :tab-position="tabPosition">
+					<el-tab-pane label="ICMP">
+						<el-scrollbar class="scrollbar">
+							<div style="padding: 20px;">
+								<h3>概述</h3>
+								<hr>
+								<p class="illustration">
+									为了更有效地转发IP数据报和提高交付成功的机会，在网际层使用了网际控制报文协 议
+									ICMP允许主机或路由器报告差错情 况和提供有关异常情况的报告。ICMP报文作为IP层数据报的数据，加上数据报的首部，组成IP数据报发送出 去。ICMP报文格式下图所示。
+								</p>
+								<div style="width: 450px;margin:0 auto"><img src="./img/icmp.png"></div>
+								<h3>ICMP报文种类</h3>
+								<hr>
+								<p class="illustration">
+									ICMP报文的种类有两种，即ICMP差错报告报文和ICMP询问报文。下表给出了几种常用的ICMP报文类型。
+								</p>
+								<div style="width: 560px;margin:0 auto"><img src="./img/icmp2.png"></div>
+								<p class="illustration">
+									上表给出的ICMP差错报告报文共有四种
+								</p>
+								<ol>
+									<li>
+										终点不可达：当路由器或主机不能交付数据报时就向源点发送终点不可达报文。
+									</li>
+									<li>
+										时间超过：当路由器收到生存时间为零的数据报时，除丢弃该数据报外，还要向 源点发送时间超过报文。当终点在预先规定的时间内不能收到一个数据报的全部数据报片 时，就把巳收到的数据报片都丢弃，并向源点发送时间超过报文。
+									</li>
+									<li>
+										参数问题：当路由器或目的主机收到的数据报的首部中有的字段的值不正确时， 就丢弃该数据报，并向源点发送参数问题报文。
+									</li>
+									<li>
+										改变路由(重定向)：路由器把改变路由报文发送给主机，让主机知道下次应将 数据报发送给另外的路由器(可通过更好的路由)。
+									</li>
+								</ol>
+								<p class="illustration" style="text-indent: 0;">
+									下面是不应发送ICMP差错报告报文的几种情况:
+								</p>
+								<ol>
+									<li>对ICMP差错报告报文，不再发送ICMP差错报告报文。</li>
+									<li>对第一个分片的数据报片的所有后续数据报片，都不发送ICMP差错报告报文。</li>
+									<li>对具有多播地址的数据报，都不发送ICMP差错报告报文。 </li> 
+									<li>对具有特殊地址（如127.0.0.0或0.0.0.0）的数据报，不发送ICMP差错报告报文。</li>
+								</ol>
+								<p class="illustration" style="text-indent: 0;">
+									常用的ICMP询问报文有两种，即：
+								</p>
+								<ol>
+									<li>
+										回送请求和回答:ICMP回送请求报文是由主机或路由器向一个特定的目的主机 发出的询问。收到此报文的主机必须给源主机或銘由器发送ICMP回送回答报文。这种询 问报文用来测试目的站是否可达以及了解其有关状态。
+									</li>
+									<li>
+										时间戳请求和回答
+										ICMP时间戳请求报文是请某台主机或路由器回答当前的日 期和时间。在ICMP时间戳回答报文中有一个32位的字段，其中写入的整数代表从1900年 1月1日起到当前时刻一共有多少秒。时间戳请求与回答可用于时钟同步和时间测量。
+									</li>
+								</ol>
+
+								<h3>ICMP的应用</h3>
+								<hr>
+								<p class="illustration">
+									ICMP的一个重要应用就是分组网间探测PING (Packet InterNet Groper),用来测试两台 主机之间的连通性。PING使用了
+									ICMP回送请求与回送回答报文。PING是应用层直接使 用网络层ICMP的一个例子。它没有通过运输层的TCP或UDP。
+								</p>
+							</div>
+						</el-scrollbar>
+					</el-tab-pane>
+					<el-tab-pane label="IGMP">
+						<el-scrollbar class="scrollbar">
+							<div style="padding: 20px;">
+								<h3>概述</h3>
+								<hr>
+								<p class="illustration">
+									网路群组管理协议(IGMP）是用于管理网路协议多播组成员的一种通信协议。IP主机和相邻的路由器利用IGMP来创建多播组的组成员。像ICMP用于单播连接一样，IGMP也是IP多播说明的一个完整部分。
+									IGMP为互联网协议的一种，属于开放系统链接(OSI) 模块的第三层协议，IP主机用它将主机的多点发送成员人数报告给临近的多点发送路由器。
+								</p>
+							</div>
+						</el-scrollbar>
+					</el-tab-pane>
+					<el-tab-pane label="IP">
+						<el-scrollbar class="scrollbar">
+							<div style="padding: 20px;">
+								<el-button type="primary"
+									style="width: 100%;height: 48px;font-size: 24px;margin-bottom: 20px;" plain>
+									<a href="tcp.html">点此进入TCP/IP协议可视化页面</a> </el-button>
+								<h3>概述</h3>
+								<hr>
+								<p class="illustration">
+									网际协议（IP；也称互联网协议）是用于分组交换数据网络的一种协议。
+									IP是在TCP/IP协议族中网络层的主要协议，任务仅仅是根据源主机和目的主机的地址来传送数据。为此目的，IP定义了寻址方法和数据报的封装结构。第一个架构的主要版本为IPv4，目前仍然是广泛使用的互联网协议。
+								</p>
+								<h3>IP封装</h3>
+								<hr>
+								<p class="illustration">
+									数据在IP互联网中传送时会被封装为数据包。IP协议的独特之处在于：在报文交换网络中主机在传输数据之前，无须与先前未曾通信过的目的主机预先创建好一条特定的“通路”。互联网协议提供了一种“不可靠的”数据包传输机制（也被称作“尽力而为”或“尽最大努力交付”）；也就是说，它不保证数据能准确的传输。数据包在到达的时候可能已经损坏，顺序错乱（与其它一起传送的报文相比），产生冗余包，或者全部丢失。如果应用需要保证可靠性，一般需要采取其他的方法，例如利用IP的上层协议控制。
+								</p>
+								<h3>特点</h3>
+								<hr>
+								<p class="illustration">
+									IP协议为上层协议提供无状态、无连接、不可靠的服务。
+								</p>
+								<h5>无状态</h5>
+								<p class="illustration">
+									无状态是指IP通信双方不同步传输数据的状态信息，所有IP数据报的发送、传输、接受都是相互独立、没有上下文关系的。这种服务优点在于简单、高效。最大的缺点是无法处理乱序和重复的IP数据报，确保IP数据报完整的工作只能交给上层协议来完成。
+								</p>
+								<h5>无连接</h5>
+								<p class="illustration">
+									无连接是指IP通信双方都不长久地维持对方的任何信息。上层协议每次发送数据的时候，都需要明确指出对方的IP地址。
+								</p>
+								<h5>不可靠</h5>
+								<p class="illustration">
+									不可靠是指IP协议不能保证IP数据报准确到达接收端，它指承诺尽最大努力交付。IP模块一旦检测到数据报发送失败，就通知上层协议，而不会试图重传。
+								</p>
+								<h3>IP寻址和路由</h3>
+								<hr>
+								<p class="illustration">
+									IP协议最为复杂的方面可能就是寻址和路由了。寻址就是如何将IP地址分配给各个终端节点，以及如何划分和组合子网。所有网络端点都需要路由，尤其是网际之间的路由器。路由器通常用内部网关协议和外部网关协议决定怎样发送IP数据包。
+								</p>
+							</div>
+						</el-scrollbar>
+
+					</el-tab-pane>
+					<el-tab-pane label="ARP">
+						<el-scrollbar class="scrollbar">
+							<div style="padding: 20px;">
+								<el-button type="primary"
+									style="width: 100%;height: 48px;font-size: 24px;margin-bottom: 20px;" plain>
+									<a href="arp.html">点此进入ARP协议可视化页面</a> </el-button>
+								<h3>概述</h3>
+								<hr>
+								<p class="illustration">
+									地址解析协议是一个通过解析网络层地址来找寻数据链路层地址的网络传输协议，它在IPv4中极其重要。
+								</p>
+								<p class="illustration">
+									在以太网协议中规定，同一局域网中的一台主机要和另一台主机进行直接通信，必须要知道目标主机的MAC地址。而在TCP/IP协议中，网络层和传输层只关心目标主机的IP地址。这就导致在以太网中使用IP协议时，数据链路层的以太网协议接到上层IP协议提供的数据中，只包含目的主机的IP地址。于是需要一种方法，根据目的主机的IP地址，获得其MAC地址。这就是ARP协议要做的事情。所谓地址解析就是主机在发送帧前将目标IP地址转换成目标MAC地址的过程。
+								</p>
+								<p class="illustration">
+									另外，当发送主机和目的主机不在同一个局域网中时，即便知道对方的MAC地址，两者也不能直接通信，必须经过路由转发才可以。所以此时，发送主机通过ARP协议获得的将不是目的主机的真实MAC地址，而是一台可以通往局域网外的路由器的MAC地址。于是此后发送主机发往目的主机的所有帧，都将发往该路由器，通过它向外发送。这种情况称为委托ARP或ARP代理。
+								</p>
+								<p class="illustration">
+									在点对点链路中不使用ARP，实际上在点对点网络中也不使用MAC地址，因为在此类网络中分别已经获取了对端的IP地址。
+								</p>
+								<h3>数据包结构</h3>
+								<hr>
+								<p class="illustration">
+									地址解析协议的消息格式很简单，仅包含单一的地址解析请求或响应。ARP 消息的长度取决于上下两层地址的大小，上层地址由所使用的网络协议类型（通常是
+									IPv4）决定，下层地址则由上层协议所使用的硬件或虚拟链路层的类型决定。消息的报头中包含了这些类型以及对应的地址长度信息，此外还包含了表示请求（1）和应答（2）的操作码。数据包的有效负载为收发双方的硬件地址、协议地址，总计四个地址。
+								</p>
+								<p class="illustration">
+									为了把IP地址映射到48位以太网地址用于传输，需要一个体现地址转换协议的包格式。
+								</p>
+								<h5>以太网链路层</h5>
+								<ol>
+									<li>目标以太网地址：目标MAC地址。FF:FF:FF:FF:FF:FF （二进制全1）为广播地址。</li>
+									<li>源以太网地址：发送方MAC地址。</li>
+									<li>帧类型：以太类型，ARP为0x0806。</li>
+								</ol>
+								<h5>
+									以太网报文数据
+								</h5>
+								<ol>
+									<li>硬件类型：如以太网（0x0001）、分组无线网。</li>
+									<li>协议类型：如网际协议(IP)（0x0800）、IPv6（0x86DD）。</li>
+									<li>硬件地址长度：每种硬件地址的字节长度，一般为6（以太网）。</li>
+									<li>协议地址长度：每种协议地址的字节长度，一般为4（IPv4）。</li>
+									<li>操作码：1为ARP请求，2为ARP应答，3为RARP请求，4为RARP应答。</li>
+									<li>源硬件地址：n个字节，n由硬件地址长度得到，一般为发送方MAC地址。</li>
+									<li>源协议地址：m个字节，m由协议地址长度得到，一般为发送方IP地址。</li>
+									<li>目标硬件地址：n个字节，n由硬件地址长度得到，一般为目标MAC地址。</li>
+									<li>目标协议地址：m个字节，m由协议地址长度得到，一般为目标IP地址。</li>
+								</ol>
+								<h5>
+									报文格式
+								</h5>
+								<div style="width: 600px;margin:0 auto"><img width=600 src="./img/arp_1.png"></div>
+							</div>
+						</el-scrollbar>
+					</el-tab-pane>
+					<el-tab-pane label="RARP">
+						<el-scrollbar class="scrollbar">
+							<div style="padding: 20px;">
+								<h3>概述</h3>
+								<hr>
+								<p class="illustration">
+									逆地址解析协议（Reverse Address Resolution
+									Protocol，RARP），是一种网络协议，互联网工程任务组（IETF）在RFC903中描述了RARP[1]。RARP使用与ARP相同的报头结构，作用与ARP相反。RARP用于将MAC地址转换为IP地址。其因为较限于IP地址的运用以及其他的一些缺点，因此渐为更新的BOOTP或DHCP所取代。
+								</p>
+								<h3>报文格式</h3>
+								<hr>
+								<p class="illustration">
+									类似于ARP的报文格式主要差别在于帧类型代码为0x8035（ARP为0x0806），操作码为3请求（ARP为1），4应答（ARP为2）。
+								</p>
+							</div>
+						</el-scrollbar>
+					</el-tab-pane>
+				</el-tabs>
+			</el-card>
+			<el-card id='router_proto_card' class="box-card proto_card">
+				<div slot="header" class="clearfix">
+					<span>路由选择协议</span>
+					<el-button style="float: right; padding: 3px 0" type="text" @click="close_router_proto_card">关闭
+					</el-button>
+				</div>
+				<el-tabs :tab-position="tabPosition">
+					<el-tab-pane label="RIP">
+						<el-scrollbar class="scrollbar">
+							<div style="padding: 20px;">
+								<h3>概述</h3>
+								<hr>
+								<p class="illustration">
+									路由信息协议（RIP）是一种内部网关协议（IGP），为最早出现的距离向量路由协议。属于网络层，其主要应用于规模较小的、可靠性要求较低的网络，可以通过不断的交换信息让路由器动态的适应网络连接的变化，这些信息包括每个路由器可以到达哪些网络，这些网络有多远等。
+								</p>
+								<p class="illustration">
+									虽然RIP仍然经常的被使用，但是由于收敛慢和支持的广播网络规模有限等缺点，许多人认为它将会而且正在被诸如OSPF和IS-IS这样的路由协议所取代。当然，我们也看到EIGRP，一种和RIP属于同一基本协议类但更具适应性的路由协议，也有被使用。
+								</p>
+								<h3>运作原理</h3>
+								<hr>
+								<p class="illustration">
+									每隔30秒会与相邻的路由器交换子消息，以动态的创建路由表。
+								</p>
+							</div>
+						</el-scrollbar>
+					</el-tab-pane>
+					<el-tab-pane label="OSPF">
+						<el-scrollbar class="scrollbar">
+							<div style="padding: 20px;">
+								<h3>概述</h3>
+								<hr>
+								<p class="illustration">
+									OSPF路由协议是一种典型的链路状态（Link-state）的路由协议，一般用于同一个路由域内。在这里，路由域是指一个自治系统（Autonomous
+									System），即AS，它是指一组通过统一的路由政策或路由协议互相交换路由信息的网络。在这个AS中，所有的OSPF路由器都维护一个相同的描述这个AS结构的数据库，该数据库中存放的是路由域中相应链路的状态信息，OSPF路由器正是通过这个数据库计算出其OSPF路由表的。
+								</p>
+								<p class="illustration">
+									作为一种链路状态的路由协议，OSPF将链路状态组播数据LSA（Link State
+									Advertisement）传送给在某一区域内的所有路由器，这一点与距离矢量路由协议不同。运行距离矢量路由协议的路由器是将部分或全部的路由表传递给与其相邻的路由器。
+								</p>
+								<p class="illustration">
+									在信息交换的安全性上，OSPF规定了路由器之间的任何信息交换在必要时都可以经过认证或鉴别（Authentication），以保证只有可信的路由器之间才能传播选路信息。OSPF支持多种鉴别机制，并且允许各个区域间采用不同的鉴别机制。OSPF对链路状态算法在广播式网络（如以太网）中的应用进行了优化，以尽可能地利用硬件广播能力来传递链路状态报文。通常链路状态算法的拓扑图中一个结点代表一个路由器。若K个路由器都连接到以太网上，在广播链路状态时，关于这K个路由器的报文将达到K的平方个。为此，OSPF在拓扑结构图允许一个结点代表一个广播网络。每个广播网络上所有路由器发送链路状态报文，报告该网络中的路由器的链路状态。
+								</p>
+							</div>
+						</el-scrollbar>
+					</el-tab-pane>
+					<el-tab-pane label="BGP">
+						<el-scrollbar class="scrollbar">
+							<div style="padding: 20px;">
+								<h3>概述</h3>
+								<hr>
+								<p class="illustration">
+									边界网关协议（BGP）是互联网上一个核心的去中心化自治路由协议。它通过维护IP路由表或‘前缀’表来实现自治系统（AS）之间的可达性，属于矢量路由协议。BGP不使用传统的内部网关协议（IGP）的指标，而使用基于路径、网络策略或规则集来决定路由。因此，它更适合被称为矢量性协议，而不是路由协议。
+								</p>
+								<p class="illustration">
+									大多数互联网服务提供商必须使用BGP来与其他ISP创建路由连接（尤其是当它们采取多宿主连接时）。因此，即使大多数互联网用户不直接使用它，但是与7号信令系统相比，即通过PSTN的跨供应商核心响应设置协议，BGP仍然是互联网最重要的协议之一。特大型的私有IP网络也可以使用BGP。例如当需要将若干个大型的开放最短路径优先（OSPF）网络进行合并，而OSPF本身又无法提供这种可扩展性时。使用BGP的另一个原因是其能为多宿主的单个ISP或多个ISP网络提供更好的冗余网络。
+								</p>
+							</div>
+						</el-scrollbar>
+					</el-tab-pane>
+				</el-tabs>
+			</el-card>
+			<el-card id='app_card' class="box-card proto_card">
+				<div slot="header" class="clearfix">
+					<span>应用层</span>
+					<el-button style="float: right; padding: 3px 0" type="text" @click="close_app_card">关闭
+					</el-button>
+				</div>
+				<el-scrollbar class="scrollbar">
+					<div style="padding: 20px;">
+						<h3>概述</h3>
+						<hr>
+						<p class="illustration">
+							应用层是体系结构中的最高层。应用层的任务是通过应用进程间的交互来完成特定网 络应用。应用层协议定义的是应用进程间通信和交互的规则。这里的进程就是指主机中正在 运行的程序。对于不同的网络应用需要有不同的应用层协议。在互联网中的应用层协议很 多，如域名系统DNS,支持万维网应用的HTTP协议，支持电子邮件的SMTP协议，等 等。我们把应用层交互的数据单元称为报文(message)。
+						</p>
+						<div style="width: 500px;margin:0 auto"><img src="./img/app_1.png"></div>
+					</div>
+				</el-scrollbar>
+			</el-card>
+			<el-card id='transport_card' class="box-card proto_card">
+				<div slot="header" class="clearfix">
+					<span>传输层</span>
+					<el-button style="float: right; padding: 3px 0" type="text" @click="close_transport_card">关闭
+					</el-button>
+				</div>
+				<el-scrollbar class="scrollbar">
+					<div style="padding: 20px;">
+						<h3>概述</h3>
+						<hr>
+						<p class="illustration">
+							传输层（Transport Layer）协议负责在两个终端应用之间传输应用层的消息。常见的传输层协议有TCP，UDP等。传输层传播的信息称为报文段（Segment）。
+						</p>
+						<p class="illustration">
+							应用层提供的服务是让两个终端的进程进行信息交换。而传输层提供是在两个终端的进程之间数据传输服务。
+						</p>
+						<p class="illustration">
+							传输层位于应用层和网络层之间。它给应用层提供数据传输服务，同时，它利用了网络层提供的服务。虽然网络层的 IP （Internet
+							Protocol）协议提供的是尽力传递服务，也就是说网络层提供的是不可靠的数据传输，但是传输层自身可以通过相关的算法，从而实现可靠的数据传输服务。
+						</p>
+						<h3>传输层提供的服务</h3>
+						<hr>
+						<ol>
+							<li>数据传输。</li>
+							<li>错误检查。</li>
+							<li>可靠数据传输。数据的正确性和有序性。</li>
+							<li>拥塞控制。</li>
+						</ol>
+						<p class="illustration">
+							传输层主要有 TCP 和 UDP 两个协议，不同的协议提供不同的服务，适用于不同的应用场景。其中，TCP 协议提供的是可靠传输，它包含了上面所有的服务。而 UDP
+							协议提供的是不可靠传输，包含部分服务，即数据传输和错误检查。
+						</p>
+						<h3>传输层发送数据的过程</h3>
+						<hr>
+						<ol>
+							<li>客户端进程组装应用层报文</li>
+							<li>进程根据传输层协议，创建相应的 Socket。</li>
+							<li>进程将应用层消息传给 Socket。</li>
+							<li>Socket 将应用层报文（Message）分成多份，加上传输层报文头。封装成传输层报文段（Segment）传递给网络层。</li>
+						</ol>
+						<h3>传输层接收数据的过程</h3>
+						<hr>
+						<ol>
+							<li>网络层将组装好的报文段传给传输层。</li>
+							<li>传输层接收到报文段，根据报文段的头部信息中的目标端口，将报文段传给指定的 Socket。</li>
+							<li>Socket 收集到所有的报文段后，将报文段转换为应用层报文。</li>
+							<li>进程读取 Socket 中的应用层报文。</li>
+						</ol>
+						<p class="illustration">
+							上述过程涉及到的一些重要的概念，接下来进行解释。
+						</p>
+						<h3>进程</h3>
+						<hr>
+						<p class="illustration">
+							在操作系统中，一个运行的程序称为一个进程。进程是分配计算机资源的最小单元。网络通信宏观上是两个可计算的终端设备之间的通信，微观上是两个进程之间的通信。
+						</p>
+						<h3>端口</h3>
+						<hr>
+						<p class="illustration">
+							端口（Port Number）一个逻辑的实体，它用于在终端设备进行网络通信时标识一个进程。一个进程可以绑定多个端口。一个端口只能属于一个进程。
+						</p>
+						<h3>套接字（Socket）</h3>
+						<hr>
+						<p class="illustration">
+							Socket 是一个软件组件。它帮助计算机程序连接本地网络或者广域网。Socket 为进程打开网络连接，允许进程通过网络读写数据。Socket 是进程间网络通信的一个终端。Socket
+							是连接应用层和网络层的大门。
+						</p>
+						<p class="illustration">
+							一个 Socket 有三个部分组成：传输层协议，IP 地址，端口。Socket 绑定了一个具体的端口，运输层通过端口知道把报文段传送给哪个进程。
+						</p>
+					</div>
+				</el-scrollbar>
+			</el-card>
+			<el-card id='internet_card' class="box-card proto_card">
+				<div slot="header" class="clearfix">
+					<span>网络层</span>
+					<el-button style="float: right; padding: 3px 0" type="text" @click="close_internet_card">关闭
+					</el-button>
+				</div>
+				<el-scrollbar class="scrollbar">
+					<div style="padding: 20px;">
+						<h3>概述</h3>
+						<hr>
+						<p class="illustration">
+							网络层负责为分组交换网上的不同主机提供通信服务。在发送数据时，网络层把运输 层产生的报文段或用户数据报封装成分组或包进行传送。在TCP/IP体系中，由于网络层使用IP协议，因此分组也叫做IP数据报，或简称为数据报。这里把“分组”和“数据报”作 为同义词使用。
+						</p>
+						<p class="illustration">
+							网络层的另一个任务就是要选择合适的路由，使源主机运输层所传下来的分组，能够 通过网络中的路由器找到目的主机。
+						</p>
+						<p class="illustration">
+							互联网是由大量的异构(heterogseous)网络通过路由器(router)相互连接起来的。互联网 使用的网络层协议是无连接的网际协议IP (InternetProtocol)和许多种路由选择协议，因此互 联网的网络层也叫做网际层或IP层。网络层、网际层和IP层都是同义语。
+						</p>
+						<h3>因特网的结构</h3>
+						<hr>
+						<p class="illustration">
+							因特网可以分为网络的边缘和网络的中心。网络的边缘是一个路由器连接着各种各样的终端设备，如电脑，手机等。网络的中心是由许许多多的路由连接起来的一个网状结构，它组成了网络的骨架。因特网的结构如下图所示：
+						</p>
+						<div style="width: 500px;margin:0 auto"><img src="./img/internet_1.png"></div>
+						<p class="illustration">
+							应用层和传输层只出现网络边缘的终端设备上。在网络的中心的路由器上没有应用层和传输层，最高层为网络层，它负责传输网络层数据。
+						</p>
+						<p class="illustration">
+							应用层和传输层是两个终端设备上的进程之间的通信，它们只关心进程发给网络层的数据是什么样的，以及从网络层接收到的数据是什么样的。它们不管网络的结构是什么样的，数据是如何在网络中传输的。
+						</p>
+						<h3>网络层实现的功能</h3>
+						<hr>
+						<p class="illustration">
+							网络层主要实现在两个主机之间的网络通信，它要将一个主机上的数据，经过网络（多个路由器），传递给另一个主机。要实现这个功能，需要解决两个问题：1.
+							网络层数据如何在一个路由器节点上传输？2. 网络层数据如何选择一条最快的网络路径进行数据传输？
+						</p>
+						<p class="illustration">
+							路由器上的数据传输是指数据包从路由器的一个输入链路接口传输到一个输出链路接口。这个功能是通过硬件实现的。而选择路径即路由，路由一般是通过软件实现的。
+						</p>
+						<!-- <h3>网络层的数据转发（Forwarding）</h3>
+						<hr>
+						<p class="illustration">
+							网络层的信息通信，是将网络层的数据报（Datagram）从客户端主机，经过许多个路由器的转发，最终传递到服务端主机。为了了解网络层数据是如何转发的？我们先介绍路由器的内部工作原理。
+						</p>
+						<h5>路由器的结构</h5>
+						<p class="illustration">
+							路由器结构如下图所示。它主要由以下四个部分组成。
+						</p>
+						<div style="width: 500px;margin:0 auto"><img src="./img/internet_2.png"></div>
+						<ul>
+							<li>输入端口（Input
+								Port）：输入端口执行三个步骤。第一步执行物理层的功能，终止传入的物理链路。第二步执行链路层功能，与传入链路另一侧的链路层相互操作。第三步，查询转发表，判断将数据传送到哪个输出端口。
+							</li>
+							<li>交换结构（Switch Fabric）：连接输入端口和输出端口。</li>
+							<li>输出端口（Output Port）：接受交换结构的数据，传播这些数据到输出链路。</li>
+							<li>路由选择处理器（Routing Processor）：维护路由表和链路状态信息，计算路由器的转发表。</li>
+						</ul>
+						<h5>路由器的工作原理</h5>
+						<ol>
+							<li>
+								输入端口主要是实现查询报文的输出端口的功能。通过在转发表中查询匹配目标 IP
+								地址的前缀，从而得到对应的输出端口。如果目标地址匹配多个前缀，则使用最长前缀匹配规则（Longest Prefix Matching Rule）。
+							</li>
+							<li>
+								转换组织的实现方式有很多种。常用的三种实现方式如下：
+								Memory（内存）。拷贝数据包到输出端口的内存区域。缺点是多个数据包不能同时读写内存。
+								Bus（总线）。输入端口将数据包直接传输给输出端口。缺点是多个数据包不能同时使用 bus。
+								Crossbar（交叉开关矩阵）。由 2N 个bus 连接 N 个输入端口和 N 个输出端口。可以同时传输多个数据包。缺点是不能同时传输多个同一输出端口的数据包。
+							</li>
+							<li>
+								输出端口，从内存区域的队列中选择一个数据包出队，将使数据包封装成帧在链路上传输。
+							</li>
+						</ol> -->
+					</div>
+				</el-scrollbar>
+			</el-card>
+			<el-card id='datalink_card' class="box-card proto_card">
+				<div slot="header" class="clearfix">
+					<span>数据链路层</span>
+					<el-button style="float: right; padding: 3px 0" type="text" @click="close_datalink_card">关闭
+					</el-button>
+				</div>
+				<el-scrollbar class="scrollbar">
+					<div style="padding: 20px;">
+						<h3>概述</h3>
+						<hr>
+						<p class="illustration">
+							数据链路层常简称为链路层。我们知道，两台主机之间的数据传输，总是在一段一段 的链路上传送的，这就需要使用专门的链路层的协议。在两个相邻结点之间传送数据时，数 据链路层将网络层交下来的IP数据报组装成帧(framing),在两个相邻结点间的链路上传送 帧(frame)。每一帧包括数据和必要的控制信息(如同步信息、地址信息、差错控制等)。
+						</p>
+						<p class="illustration">
+							在接收数据时，控制信息使接收端能够知道一个帧从哪个比特开始和到哪个比特结 束。这样，数据链路层在收到一个帧后，就可从中提取出数据部分，上交给网络层。 控制信息还使接收端能够检测到所收到的帧中有无差错。如发现有差错，数据链路层 就简单地丢弃这个出了差错的帧，以免继续在网络中传送下去白白浪费网络资源。如果需要 改正数据在数据链路层传输时出现的差错(这就是说，数据链路层不仅要检错，而且要纠 错)，那么就要釆用可靠传输协议来纠正出现的差错。这种方法会使数据链路层的协议复杂些。
+						</p>
+						<h5>
+							链路层提供的服务
+						</h5>
+						<ol>
+							<li>封装。将网络层的数据报封装成链路层的帧。</li>
+							<li>链路接入。</li>
+							<li>不可靠数据传输。</li>
+							<li>错误侦测和纠正。</li>
+						</ol>
+					</div>
+				</el-scrollbar>
+			</el-card>
+			<el-card id='physical_card' class="box-card proto_card">
+				<div slot="header" class="clearfix">
+					<span>物理层</span>
+					<el-button style="float: right; padding: 3px 0" type="text" @click="close_physical_card">关闭
+					</el-button>
+				</div>
+				<el-scrollbar class="scrollbar">
+					<div style="padding: 20px;">
+						<h3>概述</h3>
+						<hr>
+						<p class="illustration">
+							在物理层上所传数据的单位是比特。发送方发送1（或0）时，接收方应当收到1（或 0）而不是0
+							（或1）。因此物理层要考虑用多大的电压代表“1”或“0”，以及接收方如何识 别出发送方所发送的比特。物理层还要确定连接电缆的插头应当有多少根引脚以及各引脚应 如何连接。当然，解释比特代表的意思，就不是物理层的任务。请注意，传递信息所利用的 一些物理媒体，如双绞线、同轴电缆、光缆、无线信道等，并不在物理层协议之内而是在物 理层协议的下面。因此也有人把物理层下面的物理媒体当作第0层。
+						</p>
+					</div>
+				</el-scrollbar>
+			</el-card>
+			<el-card id='bits_card' class="box-card proto_card" style="height: 200px;">
+				<div slot="header" class="clearfix">
+					<span>比特流</span>
+					<el-button style="float: right; padding: 3px 0" type="text" @click="close_bits_card">关闭
+					</el-button>
+				</div>
+				<el-scrollbar class="scrollbar">
+					<div style="padding: 20px;">
+						<p class="illustration">
+							物理层传播的信息称为比特（Bit），比特是信息量单位，是由英文BIT音译而来，同时也是二进制数字中的位。二进制数的一位所包含的信息就是一比特，如二进制数0100就是4比特。比特流是由0和1组成的序列，也可以说成是一串二进制序列。
+						</p>
+					</div>
+				</el-scrollbar>
+			</el-card>
+			<el-card id='macheader_card' class="box-card proto_card">
+				<div slot="header" class="clearfix">
+					<span>MAC帧的格式</span>
+					<el-button style="float: right; padding: 3px 0" type="text" @click="close_macheader_card">关闭
+					</el-button>
+				</div>
+				<el-scrollbar class="scrollbar">
+					<div style="padding: 20px;">
+						<p class="illustration">
+							常用的以太网MAC帧格式有两种标准，一种是以太网标 准，另一种是IEEE的802.3标准。这里只介绍使用得最多的以太网的MAC帧格式。
+						</p>
+						<div style="width: 700px;margin:0 auto"><img width=700 src="./img/macheader_3.png"></div>
+						<br>
+						<p class="illustration">
+							以太网V2的MAC帧较为简单，由五个字段组成。前两个字段分别为6字节长的目的 地址和源地址字段。第三个字段是2字节的类型字段，用来标志上一层使用的是什么协议， 以便把收到的MAC帧的数据上交给上一层的这个协议。例如，当类型字段的值是0x0800 时，就表示上层使用的是IP数据报。若类型字段的值为0x8137,则表示该帧是由Novell IPX发过来的。第四个字段是数据字段，其长度在46到1500字节之间（46字节是这样得 出的：最小长度64字节减去18字节的首部和尾部就得出数据字段的最小长度）。
+						</p>
+
+					</div>
+				</el-scrollbar>
+			</el-card>
+			<el-card id='ipheader_card' class="box-card proto_card">
+				<div slot="header" class="clearfix">
+					<span>IP数据报的格式</span>
+					<el-button style="float: right; padding: 3px 0" type="text" @click="close_ipheader_card">关闭
+					</el-button>
+				</div>
+				<el-scrollbar class="scrollbar">
+					<div style="padding: 20px;">
+						<div style="width: 700px;margin:0 auto"><img width=700 src="./img/ip_head_1.png"></div>
+						<p class="illustration">
+							一个IP数据报由首部和数据两部分组成。首部的前一部分是固定长 度，共20字节，是所有IP数据报必须具有的。在首部的固定部分的后面是一些可选字段， 其长度是可变的。下面介绍首部各字段的意义。
+						</p>
+						<ol>
+							<li>
+								版本：占4位，指IP协议的版本。通信双方使用的IP协议的版本必须一致。目 前广泛使用的IP协议版本号为4 （即IPv4）。。
+							</li>
+							<li>
+								首部长度：占4位，其单位是4B。所以首部长度必须是4B的整数倍。如首部长度字段的4个二进制位分别是1111（对应十进制是15），则IP协议首部的长度是15 × 4B =
+								60B（字节）。由于IP数据报首部的固定部分长度固定是20，所以首部字段最小从0101开始。
+							</li>
+							<li>
+								区分服：占8位，用来获得更好的服务。在一般的情况下都不 使用这个字段。
+							</li>
+							<li>
+								总长度：占16位，表示首部和数据部分长度之和，单位是字节。
+							</li>
+							<li>
+								标识(identification)：占16位。IP软件在存储器中维持一个计数器，每产生一个 数据报，计数器就加1,并将此值赋给标识字段。但这个“标识”并不是序号，因为IP是 无连接服务，数据报不存在按序接收的问舞。当数据报由于长度超过网络的MTU而必须分 片时，这个标识字段的值就被复制到所有話数据报片的标识字段中。相同的标识字段的值使 分片后的各数据报片最后能正确地重装成为原来的数据报。
+							</li>
+							<li>
+								标志(flag)：占3位，但目前只有两位有意义。 标志字段中的最低位记为MF (More Fragment)。MF = 1即表示后面“还有分片” 的数据报。MF =
+								0表示这已是若干数据报片中的最后一个。 标志字段中间的一位记为DF (Don、Fragment),意思是“不能分片气只有当DF = 0时才允许分片。
+							</li>
+							<li>
+								片偏移：占13位。片偏移指出：较长的分组在分片后，某片在原分组中的相对 位置。也就是说，相对于用户数据字段的起点，该片从何处开始。片偏移以8个字节为偏移 单位。这就是说，每个分片的长度一定是8字节(64位)的整数倍。
+							</li>
+							<li>
+								生存时间：占8位，表示数据报在网络中的寿命。由发送数据报的源点设置这个字段，其目的是为了防止那些无法交付的数据报无限制的在互联网中兜圈子（例如从路由器R1转发到R2，再转发到R3，然后又转发到R1），因而白白浪费网络资源。数据报每经过一个路由器，这个值就会减1，当减至0时，就丢弃该数据报。
+							</li>
+							<li>
+								协议:占8位，协议字段是指出次数据报所携带的数据是使用的协议。这里记两个协议字段的值：6表示TCP协议，17表示UDP协议。
+							</li>
+							<li>
+								首部检验和：占16位，只校验数据报的首部，不检验数据部分。数据报每经过一个路由器都要重新计算一下首部校验和（一些字段，如生存时间、标志、片偏移可能发生了变化）。
+							</li>
+							<li>
+								源地址:占32位。
+							</li>
+							<li>
+								 目的地址:占32位。
+							</li>
+						</ol>
+
+					</div>
+				</el-scrollbar>
+			</el-card>
+			<el-card id='tcpheader_card' class="box-card proto_card">
+				<div slot="header" class="clearfix">
+					<span>TCP报文段的首部格式</span>
+					<el-button style="float: right; padding: 3px 0" type="text" @click="close_tcpheader_card">关闭
+					</el-button>
+				</div>
+				<el-scrollbar class="scrollbar">
+					<div style="padding: 20px;">
+						<div style="width: 700px;margin:0 auto"><img width=700 src="./img/tcp_head_1.png"></div>
+						<p class="illustration">
+							首部固定部分各字段的意义如下:
+						</p>
+						<ol>
+							<li>
+								源端口和目的端口：各占2自己，分别写入源端口号和目的端口号，TCP的分用功能也是通过端口实现的。
+							</li>
+							<li>
+								序号：占4字节，序号范围是【0，2^32 -
+								1】，共2^32（即4294967296）个序号。TCP是面向字节流的，在一个TCP连接中传送的字节流中的每一个字节都是按顺序编号。首部中的序号字段值则指的是本报文段所发送的数据的第一字节的序号。
+							</li>
+							<li>
+								确认号：占4字节，是期望收到对方下一个报文段的第一个数据字节的序号。例如，B正确收到了A发送过来的一个报文段，其序号字段值是501，而该报文段的数据长度是200字节（序号501~700），这表明B正确收到了A发送的到序号700为止的数据，因此B期望收到A的下一个数据序号是701，TCP是可靠传输，收到数据后需要给发送方回复确认信息，所以B在收到数据后给A发送的确认收到的报文段中就把确认号置为701。若确认号
+								= N,则表明：到序号N - 1为止的所有数据都已正确收到。
+							</li>
+							<li>
+								数据偏移：占4位，单位：4B。它指出TCP报文段数据起始处距离TCP报文段的起始处有多远。这个字段实际上是指出TCP报文段的首部长度。
+								<div style="width: 700px;margin:0 auto"><img width=700 src="./img/tcp_head_2.png"></div>
+								<p class="illustration">
+									如上图所示，如果数据偏移字段的值为：1101（十进制13），所以数据偏移的值为13 × 4B =
+									42B，所以可知TCP报文段数据部分的起始处到TCP报文段的起始处（即TCP首部的）
+								</p>
+								<p class="illustration">
+									数据偏移占4位，最大值为1111，即15，即数据偏移的值最大为60字节（TCP首部最大长度为60字节），又TCP首部有固定的20字节，所以TCP可选字段的长度不能超过40字节。
+								</p>
+							</li>
+							<li>
+								保留：占6位，保留今后使用。
+							</li>
+							<p class="illustration" style="text-indent: 0;margin-top: 10px;">接下来是6个控制位：</p>
+							<li>
+								紧急URG（URGent）：仅当URG = 1，表明后面的紧急指针字段才有效。它表明系统此报文段有紧急数据，应尽快传送（相当于高优先级数据），而不要按照原来的排队顺序来传送。
+							</li>
+							<li>
+								确认ACK（ACKnowledgment）：仅当ACK = 1时确认号字段才有效。TCP规定，在连接建立后所有传送的报文段都必须把ACK置1。
+							</li>
+							<li>
+								推送PSH（PuSH）：通常如果TCP缓存中字节很少，TCP会等待积累有足够多的字节后再构成报文段发送出去，当发送方将 PSH 置为
+								1时，并立即创建一个报文段发送出去，接收方TCP收到PSH = 1的报文段，就尽快地交付接收应用进程，而不再等到整个缓存都填满在向上交付。
+							</li>
+							<li>
+								复位RST（ReSeT）：当RST =
+								1时，表明TCP连接中出现了严重差错，必须释放连接，然后再重新建立传输连接。RST置为1还可以用来拒绝一个非法的报文段或拒绝打开一个连接。RST也可称为重建位或重置位。
+							</li>
+							<li>
+								同步SYN（SYNchronization）：在连接建立时用来同步序号。当SYN = 1而ACK =
+								0时，表明这是一个连接请求报文段。对方同意建立连接，则应在响应的报文段中使用SYN = 1和ACK = 1.因此，SYN 置为1表示这是一个连接请求或连接接收报文。
+							</li>
+							<li>
+								终止FIN（FINis）：用来释放一个连接。当FIN = 1时，表明此报文段的发送方的数据发送完毕，并要求释放传输连接。
+							</li>
+							<li>
+								窗口：占2字节，是指发送本报文段的一方的接收窗口。窗口的值表示：从本报文段首部中的确认号算起，接收方目前允许对方发送的数据量。即窗口值作为接收方让发送方设置其发送窗口的依据。之所以要有这个限制，是因为接收方的数据缓存空间是有限的。
+							</li>
+							<li>
+								校验和：占2字节。校验和字段校验的范围包括首部和数据这两个部分。和UDP用户数据报一样，在计算校验和时，需要在TCP报文段的前面加上12字节的伪首部。伪首部的格式和UDP伪首部的格式一样，只是需要将协议字段改为6，TCP协议号是6。
+							</li>
+							<li>
+								紧急指针：紧急指针只有在URG= 1时才有意义，它和URG字段配合使用，它指出了报文段中紧急数据的字节数，因此，紧急指针指出了紧急数据的末尾在报文段中的位置。
+							</li>
+							<li>
+								选项和填充：长度可变，最长可达40字节。填充字段是为了使整个TCP首部的长度是4字节的整数倍。
+							</li>
+							<h5>几个选项字段</h5>
+							<ol>
+								<li>
+									最大报文段长度MSS（Maximum Segment
+									Size）：是指每个TCP报文段中数据字段的最大长度，即TCP报文段长度减去TCP首部长度。它是为了考虑网络利用率。
+								</li>
+								<li>
+									窗口扩大：占3字节，这个选项是为了扩大窗口。TCP首部的窗口字段长度是16位，因此最大的窗口大小是64K字节，窗口扩大中有一个字节表示移位值S。新的窗口值等于TCP首部中的窗口位数从16增加到（16 + S）。移位值允许使用的最大值是14，相当于窗口最大值增加到2^(16+14) - 1。
+								</li>
+								<li>
+									时间戳：占10字节，其中最主要的是时间戳值字段（4字节）和时间戳回送回答字段（4字节）。时间戳选项有一般用于计算往返时间RTT。
+								</li>
+							</ol>
+						</ol>
+					</div>
+				</el-scrollbar>
+			</el-card>
+			<el-card id='appdata_card' class="box-card proto_card" style="height: 200px;">
+				<div slot="header" class="clearfix">
+					<span>应用数据</span>
+					<el-button style="float: right; padding: 3px 0" type="text" @click="close_appdata_card">关闭
+					</el-button>
+				</div>
+				<el-scrollbar class="scrollbar">
+					<div style="padding: 20px;">
+						<p class="illustration">
+							应用层交互的数据单元称为报文（Message），也可称为应用数据。应用层会将应用数据递交会传输层进行TCP封装生成TCP报文段，传输层将报文段向下递交给网络层，网络层将报文段封装为IP数据报，然后递交给链路层封装成帧。
+						</p>
+					</div>
+				</el-scrollbar>
+			</el-card>
+			<el-card id='layer_card' class="box-card proto_card" style="height: 480px;">
+				<div slot="header" class="clearfix">
+					<span>网络模型层次</span>
+					<el-button style="float: right; padding: 3px 0" type="text" @click="close_layer_card">关闭
+					</el-button>
+				</div>
+				<el-scrollbar class="scrollbar">
+					<div style="padding: 20px;">
+						<div style="width: 700px;margin:0 auto"><img width=700 src="./img/layer.png"></div>
+					</div>
+				</el-scrollbar>
+			</el-card>
+		</div>
+
+	</div>
+
 </body>
 
 </html>
